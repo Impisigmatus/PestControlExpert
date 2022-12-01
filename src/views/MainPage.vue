@@ -58,33 +58,11 @@
       </div>
     </div>
   </section>
-
-  <div v-show="timer" class="callnowbutton">
-    <a class="phone" href="tel:+7999999999">
-      <!-- <img class="phone__icon" src="@/assets/phone.svg" alt="phone" /> -->
-      Связаться с нами
-    </a>
-  </div>
 </template>
 
 <script>
 export default {
   name: 'MainPage',
-  data() {
-    return {
-      timer: false,
-    };
-  },
-  methods: {
-    changeVisible() {
-      setTimeout(() => {
-        this.timer = true;
-      }, 1000);
-    },
-  },
-  mounted() {
-    this.changeVisible();
-  },
 };
 </script>
 
@@ -94,7 +72,15 @@ export default {
   width: 100%;
   padding: 20px 50px 20px 50px;
   overflow: hidden;
+  background-color: black;
+  background: url(@/assets/bg.jpg) center/cover no-repeat;
 }
+
+/* @media (max-width: 321px) {
+  .promo {
+    background: url(@/assets/bg.jpg);
+  }
+} */
 
 .promo__img {
   width: 200px;
@@ -109,35 +95,14 @@ export default {
   height: 50px;
 }
 
-.callnowbutton {
-  transition: all 0.5s all 0.5s;
-  transform: rotate(90deg);
-  position: fixed;
-  z-index: 100;
-  padding: 10px;
-  border-radius: 20px 20px 0 0;
-  left: -45px;
-  bottom: 80px;
-  height: 30px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 10px;
-  overflow: hidden;
-  background: #00bb00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.phone {
-  text-decoration: none;
-  color: #fff;
-}
 .advantages {
   padding: 0 0 80px 0;
+  background-color: rgb(117, 117, 117);
+
   /* background-color: #f6f6f6; */
 }
 .advantages__wrapper {
-  margin-top: 65px;
+  margin-top: 25px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -150,6 +115,7 @@ export default {
   margin-top: 10px;
 }
 .advantages__title {
+  padding: 15px;
   color: #fff;
 }
 .advantages__subtitle {
@@ -184,15 +150,16 @@ export default {
 .advantages__icon_animated:hover {
   animation-play-state: paused;
 }
+
 @keyframes heartbeat {
   from {
-    transform: scale(1);
+    transform: rotateX(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: rotateX(1.1);
   }
   to {
-    transform: scale(1);
+    transform: rotateX(1);
   }
 }
 </style>

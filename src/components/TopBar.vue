@@ -6,7 +6,9 @@
       alt="#"
       @click="$router.push('/')"
     />
-    <!-- <div class="logo"></div> -->
+    <div class="logo">
+      <h1>Pest Control Expert</h1>
+    </div>
     <div class="navbar__btns">
       <pce-button class="btn__nav" @click="$router.push('/price')"
         >Цены</pce-button
@@ -36,19 +38,27 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 0 15px;
-  background-color: #fff;
+  background-color: #8bc6ec;
+  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+  border-bottom: 5px solid #b1c8f3;
 }
 
-/* .logo {
-  margin-top: 12px;
+.logo {
+  margin-top: 5px;
   text-transform: uppercase;
-  color: rgb(50, 81, 255);
-  font-size: 22px;
+  color: #ffffff;
+  font-size: 12px;
   font-weight: 700;
-} */
+}
 
 .navbar__img {
   width: 70px;
   height: 60px;
+}
+
+@media (max-width: 768px) {
+  .navbar__btns {
+    display: none;
+  }
 }
 </style>
