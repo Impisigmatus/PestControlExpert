@@ -1,6 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer__info">
+      <!-- TODO: могут понадобится кнопки в футере
       <div class="footer__btns">
         <pce-button class="btns__footer" @click="$router.push('/price')"
           >Цены</pce-button
@@ -11,8 +12,8 @@
           @click="$router.push('/map')"
           >Карта</pce-button
         >
-      </div>
-      <h2 class="footer__title">Физический адрес</h2>
+      </div> -->
+      <h2 class="footer__title">Юридический адрес</h2>
       <address class="footer__adr">
         Домодедово, мкр. Барыбино, ул. Агрохимиков, дом №7
       </address>
@@ -59,7 +60,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 385px;
+  height: 300px;
   background-color: #8bc6ec;
   background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
 }

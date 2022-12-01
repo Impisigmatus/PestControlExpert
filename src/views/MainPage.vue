@@ -56,6 +56,20 @@
           molestias.
         </div>
       </div>
+      <div class="advantages__item">
+        <img
+          src="@/assets/images/ceo.png"
+          alt="shoe"
+          class="advantages__icon"
+        />
+        <div class="advantages__subtitle">Название услуги</div>
+        <div class="advantages__descr">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
+          illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
+          quia unde molestiae officia, voluptate autem. Consectetur ullam ex
+          molestias.
+        </div>
+      </div>
     </div>
   </section>
 </template>
