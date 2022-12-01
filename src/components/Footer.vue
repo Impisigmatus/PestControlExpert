@@ -63,7 +63,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 400px;
+  height: 300px;
   background-color: #8bc6ec;
   background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
 }
