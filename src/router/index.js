@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import MainPage from '../views/MainPage.vue';
-import PricePage from '../views/PricePage.vue';
-import MapPage from '../views/MapPage.vue';
+import PrivacyPage from '../views/PrivacyPage.vue';
 
 const routes = [
   {
@@ -10,14 +9,9 @@ const routes = [
     component: MainPage,
   },
   {
-    path: '/price',
-    name: 'price',
-    component: PricePage,
-  },
-  {
-    path: '/map',
-    name: 'map',
-    component: MapPage,
+    path: '/privacy',
+    name: 'privacy',
+    component: PrivacyPage,
   },
 ];
 

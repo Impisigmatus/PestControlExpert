@@ -4,14 +4,6 @@
   <div v-show="timer" class="callnowbutton">
     <a class="phone" href="tel:+7999999999"> Связаться с нами </a>
   </div>
-  <div class="map">
-    <iframe
-      src="https://yandex.ru/map-widget/v1/?um=constructor%3Ae3928b383dca618308743ed387767940121ffab42b25f44f04dd31219e4cf45a&amp;source=constructor"
-      width="100%"
-      height="720"
-      frameborder="0"
-    ></iframe>
-  </div>
   <pce-footer />
 </template>
 

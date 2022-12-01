@@ -38,6 +38,9 @@
           <img src="@/assets/icons/email.svg" alt="email" />
         </a>
       </div>
+      <pce-button @click="$router.push('/privacy')">
+        Политика конфидициальности
+      </pce-button>
     </div>
   </footer>
 </template>
@@ -60,7 +63,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 300px;
+  height: 400px;
   background-color: #8bc6ec;
   background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
 }
