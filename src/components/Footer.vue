@@ -38,6 +38,9 @@
           <img src="@/assets/icons/email.svg" alt="email" />
         </a>
       </div>
+      <pce-button @click="$router.push('/privacy')">
+        Политика конфидициальности
+      </pce-button>
     </div>
   </footer>
 </template>

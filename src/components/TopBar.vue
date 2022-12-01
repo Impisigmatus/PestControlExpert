@@ -9,17 +9,7 @@
     <div class="logo">
       <h1>Pest Control Expert</h1>
     </div>
-    <div class="navbar__btns">
-      <pce-button class="btn__nav" @click="$router.push('/price')"
-        >Цены</pce-button
-      >
-      <pce-button
-        class="btn__nav"
-        style="margin-left: 20px"
-        @click="$router.push('/map')"
-        >Карта покрытия</pce-button
-      >
-    </div>
+    <div class="navbar__btns"></div>
   </div>
 </template>
 
