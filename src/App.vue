@@ -2,10 +2,7 @@
   <pce-top-bar />
   <router-view />
   <div v-show="timer" class="callnowbutton">
-    <a class="phone" href="tel:+7999999999">
-      <!-- <img class="phone__icon" src="@/assets/phone.svg" alt="phone" /> -->
-      Связаться с нами
-    </a>
+    <a class="phone" href="tel:+7999999999"> Связаться с нами </a>
   </div>
   <pce-footer />
 </template>
@@ -46,12 +43,11 @@ export default {
   box-sizing: border-box;
 }
 
+/* TODO: Прост) */
 /* $main-color: #377dff; */
-
 /* body {
   height: 100%;
 } */
-
 /* html::before {
   content: '';
   position: fixed;
