@@ -33,6 +33,9 @@
           >pestcontrolexpert@yandex.ru
         </a>
         <div class="footer__social">
+          <a href="https://t.me/EvgSav" class="footer__social-item">
+            <img src="@/assets/icons/telegram.png" alt="telegram"
+          /></a>
           <a
             href="https://api.whatsapp.com/send?phone=79057247681&text=Здравствуйте!%20"
             class="footer__social-item"
