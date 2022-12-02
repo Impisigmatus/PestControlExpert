@@ -28,9 +28,12 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 0 15px;
-  background-color: #8bc6ec;
-  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
-  border-bottom: 5px solid #b1c8f3;
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
+  border-bottom: 3px solid #ffffff;
 }
 
 .logo {

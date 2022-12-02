@@ -1,46 +1,52 @@
 <template>
   <footer class="footer">
     <div class="footer__info">
-      <!-- TODO: могут понадобится кнопки в футере
-      <div class="footer__btns">
-        <pce-button class="btns__footer" @click="$router.push('/price')"
-          >Цены</pce-button
-        >
-        <pce-button
-          class="btns__footer"
-          style="margin-left: 20px"
-          @click="$router.push('/map')"
-          >Карта</pce-button
-        >
-      </div> -->
-      <h2 class="footer__title">Юридический адрес</h2>
-      <address class="footer__adr">
-        Домодедово, мкр. Барыбино, ул. Агрохимиков, дом №7
-      </address>
-      <h2 class="footer__title_second">Контакты</h2>
-      <h4 class="footer__subtitle">Телефон</h4>
-      <a class="footer__phone" href="tel:+79057247681">+7 (905) 724-76-81</a>
-      <h4 class="footer__subtitle">E-mail</h4>
-      <a class="footer__phone" href="email:pestcontrolexpert@yandex.ru"
-        >pestcontrolexpert@yandex.ru
-      </a>
-      <div class="footer__social">
-        <a
-          href="https://api.whatsapp.com/send?phone=79057247681&text=Здравствуйте!%20"
-          class="footer__social-item"
-        >
-          <img src="@/assets/icons/whatsapp.svg" alt="whatsapp"
-        /></a>
-        <a
-          href="mailto:pestcontrolexpert@yandex.ru?subject=PestControlExpert"
-          class="footer__social-item"
-        >
-          <img src="@/assets/icons/email.svg" alt="email" />
+      <div class="footer__logo">
+        <img
+          class="footer__logo_img"
+          src="@/assets/logo.png"
+          alt="#"
+          @click="$router.push('/')"
+        />
+        <div class="footer__logo_title">Pest Control Expert</div>
+      </div>
+      <div class="footer__links">
+        <a href="/privacy" class="footer__links_page">О нас</a>
+        <a href="/privacy" class="footer__links_page">Наши услуги</a>
+        <a href="/privacy" class="footer__links_page">Цены</a>
+        <a href="/privacy" class="footer__links_page">Форма обратной связи</a>
+        <a href="/privacy" class="footer__links_page">Карта покрытия</a>
+        <a href="/privacy" class="footer__links_privacy"
+          >Политика конфиденциальности
         </a>
       </div>
-      <pce-button @click="$router.push('/privacy')">
-        Политика конфидициальности
-      </pce-button>
+      <div class="footer__divider"></div>
+      <div class="footer__contacts">
+        <h4 class="footer__title">Юридический адрес</h4>
+        <address class="footer__adr">
+          Домодедово, мкр. Барыбино, ул. Агрохимиков, дом №7
+        </address>
+        <h4 class="footer__subtitle">Телефон</h4>
+        <a class="footer__phone" href="tel:+79057247681">+7 (905) 724-76-81</a>
+        <h4 class="footer__subtitle">E-mail</h4>
+        <a class="footer__phone" href="email:pestcontrolexpert@yandex.ru"
+          >pestcontrolexpert@yandex.ru
+        </a>
+        <div class="footer__social">
+          <a
+            href="https://api.whatsapp.com/send?phone=79057247681&text=Здравствуйте!%20"
+            class="footer__social-item"
+          >
+            <img src="@/assets/icons/whatsapp.svg" alt="whatsapp"
+          /></a>
+          <a
+            href="mailto:pestcontrolexpert@yandex.ru?subject=PestControlExpert"
+            class="footer__social-item"
+          >
+            <img src="@/assets/icons/email.svg" alt="email" />
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
@@ -51,17 +57,48 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .footer {
-  position: relative;
   border-top: 3px solid #ffffff;
 }
+a {
+  text-decoration: none;
+}
+
+.footer__logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.footer__divider {
+  border-left: 1px solid white;
+}
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.footer__links_privacy {
+  /* border-top: 1px solid white; */
+  color: #ffffff;
+}
+.footer__links_page {
+  display: flex;
+  color: #ffffff;
+}
+.footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .footer__info {
-  position: absolute;
   padding: 20px 40px 20px 40px;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  align-content: space-around;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  flex-direction: row;
   width: 100%;
   height: 300px;
   background: radial-gradient(
@@ -73,22 +110,29 @@ export default {
 .footer__btns {
   display: flex;
 }
-
+.footer__logo_img {
+  width: 70px;
+  height: 60px;
+}
 .footer__adr {
-  margin: 15px;
+  display: flex;
+  justify-content: flex-end;
   font-size: 15px;
   line-height: 18px;
   font-weight: 400;
-  text-align: center;
   color: #ffffff;
 }
+.footer__logo_title {
+  margin-top: 5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
 .footer__phone {
-  display: block;
   color: #ffffff;
   font-size: 15px;
   font-weight: 400;
-  margin-bottom: 18px;
-  text-align: center;
 }
 .footer__phone:hover {
   color: #ffffff;
@@ -97,11 +141,9 @@ export default {
 
 .footer__title {
   color: #ffffff;
-  margin-top: 10px;
 }
 .footer__title_second {
   color: #ffffff;
-  margin-bottom: 10px;
 }
 .footer__subtitle {
   color: #ffffff;
@@ -127,6 +169,20 @@ export default {
 .footer__social {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .footer__divider {
+    display: none;
+  }
+  .footer__links {
+    display: none;
+  }
+  .footer__logo_title {
+    display: none;
+  }
+  .footer__info {
+    height: 320px;
+  }
 }
 </style>
