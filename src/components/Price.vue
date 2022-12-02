@@ -105,4 +105,15 @@ export default {
   font-size: 12px;
   line-height: 18px;
 }
+@media (max-width: 992px) {
+  .price__wrapper {
+    grid-template-columns: repeat(auto-fit, 350px);
+    padding: 0;
+  }
+}
+@media (max-width: 576px) {
+  .price__wrapper {
+    grid-template-columns: repeat(auto-fit, 300px);
+  }
+}
 </style>

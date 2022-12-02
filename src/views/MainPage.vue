@@ -69,11 +69,116 @@
     </div>
   </section>
   <pce-price></pce-price>
+
+  <!-- <pce-dialog-form></pce-dialog-form> -->
+  <section class="callback">
+    <h1>Контакты</h1>
+    <div class="callback__wrapper">
+      <div class="callback__form">
+        <form class="form" @submit.prevent>
+          <h4>Заказать обратный звонок</h4>
+          <div class="callback__name">
+            <div class="callback__input">
+              <input
+                :value="name"
+                @input="name = $event.target.value"
+                required
+                class="input"
+                type="text"
+                id="name"
+                placeholder="Ваше имя"
+              />
+            </div>
+            <div class="callback__input">
+              <input
+                :value="phone"
+                @input="phone = $event.target.value"
+                required
+                class="input"
+                type="text"
+                id="phone"
+                placeholder="Ваш номер телефона"
+              />
+            </div>
+          </div>
+          <div class="callback__input">
+            <textarea
+              :value="comment"
+              @input="comment = $event.target.value"
+              required
+              class="input"
+              type="text"
+              id="comment"
+              rows="10"
+              cols="35"
+              placeholder="Ваш комментарий"
+            >
+            </textarea>
+          </div>
+          <div class="callback__triggers">
+            <pce-button @click="sendForm" style="background: black"
+              >Отправить
+            </pce-button>
+            <div class="callback__policy">
+              <input
+                :checked="checked"
+                @change="checked = $event.target.checked"
+                required
+                type="checkbox"
+              />
+              <span>
+                Я согласен(а) с
+                <a target="/privacy" href="/privacy">
+                  политикой конфидициальности
+                </a>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="callback__map">
+        <h4>Карта покрытия</h4>
+        <iframe
+          class="callback__map_yandex"
+          src="https://yandex.ru/map-widget/v1/?um=constructor%3Ae3928b383dca618308743ed387767940121ffab42b25f44f04dd31219e4cf45a&amp;source=constructor"
+          width="320"
+          height="348"
+          frameborder="0"
+        ></iframe>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'MainPage',
+  data() {
+    return {
+      name: '',
+      phone: '',
+      comment: '',
+      checked: null,
+    };
+  },
+  methods: {
+    sendForm() {
+      if (this.checked === true) {
+        const order = {
+          id: Date.now(),
+          name: this.name,
+          phone: this.phone,
+          comment: this.comment,
+        };
+        axios.post('/api/order', order);
+        this.name = '';
+        this.phone = '';
+        this.comment = '';
+        this.checked = null;
+      }
+    },
+  },
 };
 </script>
 
@@ -174,5 +279,52 @@ export default {
   to {
     transform: rotateX(1);
   }
+}
+
+.callback__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 15px;
+}
+
+.callback__form {
+  display: flex;
+}
+.callback__name {
+  flex-wrap: wrap;
+}
+.callback__map_yandex {
+  border-radius: 10px;
+}
+@media (min-width: 1024px) {
+  .callback__map_yandex {
+    border: 5px solid black;
+    width: 1000px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.callback__input {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 10px;
+}
+.callback__triggers {
+  flex-direction: column-reverse;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+.callback__name {
+  display: flex;
 }
 </style>
