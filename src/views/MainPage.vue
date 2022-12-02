@@ -68,6 +68,7 @@
       </div>
     </div>
   </section>
+  <pce-price></pce-price>
 </template>
 
 <script>

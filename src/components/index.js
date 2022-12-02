@@ -3,5 +3,6 @@ import Button from '@/components/Button';
 import Consultation from '@/components/Consultation';
 import Promo from '@/components/Promo';
 import Footer from '@/components/Footer';
+import Price from '@/components/Price';
 
-export default [TopBar, Button, Consultation, Promo, Footer];
+export default [TopBar, Button, Consultation, Promo, Footer, Price];
