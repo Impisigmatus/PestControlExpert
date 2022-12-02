@@ -22,8 +22,8 @@
       <a class="footer__phone" href="tel:+79057247681">+7 (905) 724-76-81</a>
       <h4 class="footer__subtitle">E-mail</h4>
       <a class="footer__phone" href="email:pestcontrolexpert@yandex.ru"
-        >pestcontrolexpert@yandex.ru</a
-      >
+        >pestcontrolexpert@yandex.ru
+      </a>
       <div class="footer__social">
         <a
           href="https://api.whatsapp.com/send?phone=79057247681&text=Здравствуйте!%20"
@@ -54,7 +54,7 @@ export default {
 <style scoped>
 .footer {
   position: relative;
-  border-top: 5px solid #b1c8f3;
+  border-top: 3px solid #ffffff;
 }
 .footer__info {
   position: absolute;
@@ -64,8 +64,11 @@ export default {
   transform: translateX(-50%);
   width: 100%;
   height: 300px;
-  background-color: #8bc6ec;
-  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
 }
 .footer__btns {
   display: flex;
