@@ -11,59 +11,55 @@
     </div>
   </section>
 
-  <section class="advantages">
-    <h2 class="advantages__title">НАШИ УСЛУГИ</h2>
-    <div class="advantages__wrapper">
-      <div class="advantages__item">
+  <section class="services">
+    <h2 class="services__title">НАШИ УСЛУГИ</h2>
+    <div class="services__wrapper">
+      <div class="services__item">
         <img
           src="@/assets/images/cockroach.png"
-          alt="cup"
-          class="advantages__icon"
+          alt="cockroach"
+          class="services__icon"
         />
-        <div class="advantages__subtitle">Название услуги</div>
-        <div class="advantages__descr">
+        <div class="services__subtitle">Дезинсекция</div>
+        <div class="services__descr">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
           illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
           quia unde molestiae officia, voluptate autem. Consectetur ullam ex
           molestias.
         </div>
       </div>
-      <div class="advantages__item">
+      <div class="services__item">
         <img
           src="@/assets/images/rat.png"
-          alt="heart"
-          class="advantages__icon advantages__icon_animated"
+          alt="rat"
+          class="services__icon services__icon_animated"
         />
-        <div class="advantages__subtitle">Название услуги</div>
-        <div class="advantages__descr">
+        <div class="services__subtitle">Дератизация</div>
+        <div class="services__descr">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
           illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
           quia unde molestiae officia, voluptate autem. Consectetur ullam ex
           molestias.
         </div>
       </div>
-      <div class="advantages__item">
+      <div class="services__item">
         <img
           src="@/assets/images/virus.png"
-          alt="shoe"
-          class="advantages__icon"
+          alt="virus"
+          class="services__icon"
         />
-        <div class="advantages__subtitle">Название услуги</div>
-        <div class="advantages__descr">
+        <div class="services__subtitle">Дезинфекция</div>
+        <div class="services__descr">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
           illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
           quia unde molestiae officia, voluptate autem. Consectetur ullam ex
           molestias.
         </div>
       </div>
-      <div class="advantages__item">
-        <img
-          src="@/assets/images/ceo.png"
-          alt="shoe"
-          class="advantages__icon"
-        />
-        <div class="advantages__subtitle">Название услуги</div>
-        <div class="advantages__descr">
+      <div class="services__item">
+        <img src="@/assets/images/ceo.png" alt="ceo" class="services__icon" />
+        <div class="services__subtitle">СЭО</div>
+        <div class="services__descr">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
           illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
           quia unde molestiae officia, voluptate autem. Consectetur ullam ex
@@ -72,14 +68,6 @@
       </div>
     </div>
   </section>
-  <div class="map">
-    <iframe
-      src="https://yandex.ru/map-widget/v1/?um=constructor%3Ae3928b383dca618308743ed387767940121ffab42b25f44f04dd31219e4cf45a&amp;source=constructor"
-      width="100%"
-      height="720"
-      frameborder="0"
-    ></iframe>
-  </div>
 </template>
 
 <script>
@@ -95,7 +83,7 @@ export default {
   padding: 20px 50px 20px 50px;
   overflow: hidden;
   background-color: black;
-  background: url(@/assets/bg.jpg) center/cover no-repeat;
+  background: url(@/assets/images/services_bg.jpg) center/cover no-repeat;
 }
 
 /* @media (max-width: 321px) {
@@ -117,59 +105,61 @@ export default {
   height: 50px;
 }
 
-.advantages {
+.services {
   padding: 0 0 80px 0;
-  background-color: rgb(117, 117, 117);
-
-  /* background-color: #f6f6f6; */
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
 }
-.advantages__wrapper {
+.services__wrapper {
   margin-top: 25px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.advantages__item {
+.services__item {
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 238px;
   margin-top: 10px;
 }
-.advantages__title {
+.services__title {
   padding: 15px;
   color: #fff;
 }
-.advantages__subtitle {
+.services__subtitle {
   margin-top: 38px;
   color: #ffffff;
   font-size: 18px;
   font-weight: 700;
 }
-.advantages__descr {
+.services__descr {
   margin-top: 26px;
   color: #ffffff;
   font-size: 14px;
   font-weight: 300;
   text-align: center;
 }
-.advantages__descr a {
+.services__descr a {
   color: #f00;
   text-decoration: underline;
 }
 
-.advantages__icon {
+.services__icon {
   width: 100%;
   height: 100%;
 }
 
-.advantages__icon_animated {
+.services__icon_animated {
   animation-name: heartbeat;
   animation-duration: 2s;
   animation-timing-function: ease;
   animation-iteration-count: infinite;
 }
-.advantages__icon_animated:hover {
+.services__icon_animated:hover {
   animation-play-state: paused;
 }
 
