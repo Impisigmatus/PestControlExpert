@@ -5,6 +5,21 @@
     <a class="phone" href="tel:+7999999999"> Связаться с нами </a>
   </div>
   <pce-footer />
+  <a v-show="arrow" href="#about" class="pageup">
+    <svg
+      class="up"
+      viewBox="0 0 26 26"
+      fill="#fff"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M26 0H0V26H26V0ZM4.6593 17.7519L13.1233 10.33L21.5873 17.7519L22.9059 16.2481L13.7826 8.24813L13.1233 7.67L12.464 8.24813L3.3407 16.2481L4.6593 17.7519Z"
+        fill="black"
+      />
+    </svg>
+  </a>
 </template>
 
 <script>
@@ -12,17 +27,28 @@ export default {
   data() {
     return {
       timer: false,
+      arrow: false,
     };
   },
   methods: {
-    changeVisible() {
+    changeVisibleCallButton() {
       setTimeout(() => {
         this.timer = true;
-      }, 3000);
+      }, 6000);
+    },
+    changeVisibleArrowUp() {
+      window.addEventListener('scroll', () => {
+        if (document.documentElement.scrollTop > 1200) {
+          this.arrow = true;
+        } else {
+          this.arrow = false;
+        }
+      });
     },
   },
   mounted() {
-    this.changeVisible();
+    this.changeVisibleCallButton();
+    this.changeVisibleArrowUp();
   },
 };
 </script>
@@ -42,7 +68,18 @@ export default {
   transition: all 0.25s ease-out;
   box-sizing: border-box;
 }
-
+.pageup {
+  width: 26px;
+  height: 26px;
+  position: fixed;
+  bottom: 100px;
+  right: 5%;
+  z-index: 30;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid white;
+  transition: 1s all;
+}
 /* TODO: могут понадобится стили */
 /* $main-color: #377dff; */
 /* body {

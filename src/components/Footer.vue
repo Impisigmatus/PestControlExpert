@@ -11,11 +11,11 @@
         <div class="footer__logo_title">Pest Control Expert</div>
       </div>
       <div class="footer__links">
-        <a href="/privacy" class="footer__links_page">О нас</a>
-        <a href="/privacy" class="footer__links_page">Наши услуги</a>
-        <a href="/privacy" class="footer__links_page">Цены</a>
-        <a href="/privacy" class="footer__links_page">Форма обратной связи</a>
-        <a href="/privacy" class="footer__links_page">Карта покрытия</a>
+        <a href="#about" class="footer__links_page">О нас</a>
+        <a href="#services" class="footer__links_page">Наши услуги</a>
+        <a href="#prices" class="footer__links_page">Цены</a>
+        <a href="#form" class="footer__links_page">Форма обратной связи</a>
+        <a href="#map" class="footer__links_page">Карта покрытия</a>
         <a href="/privacy" class="footer__links_privacy"
           >Политика конфиденциальности
         </a>

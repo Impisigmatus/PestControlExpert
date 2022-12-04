@@ -1,6 +1,6 @@
 <template>
   <!-- <pce-promo /> -->
-  <section class="promo">
+  <section class="promo" id="about">
     <div class="promo__title">
       <img class="promo__img" src="@/assets/mumu.png" alt="#" />
       <p>
@@ -11,7 +11,7 @@
     </div>
   </section>
 
-  <section class="services">
+  <section class="services" id="services">
     <h2 class="services__title">НАШИ УСЛУГИ</h2>
     <div class="services__wrapper">
       <div class="services__item">
@@ -71,11 +71,11 @@
   <pce-price></pce-price>
 
   <!-- <pce-dialog-form></pce-dialog-form> -->
-  <section class="callback">
+  <section class="callback" id="map">
     <h1>Контакты</h1>
     <div class="callback__wrapper">
       <div class="callback__form">
-        <form class="form" @submit.prevent>
+        <form class="form" id="form" @submit.prevent>
           <h4>Заказать обратный звонок</h4>
           <div class="callback__name">
             <div class="callback__input">
