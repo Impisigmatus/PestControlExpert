@@ -1,5 +1,5 @@
 <template>
-  <section class="price">
+  <section class="price" id="prices">
     <h2 class="title__section-title">Прайс-лист</h2>
     <div class="divider"></div>
     <div class="price__wrapper">
