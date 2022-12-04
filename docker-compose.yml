@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     volumes:
       - /opt/impisigmatus.ru:/opt/impisigmatus.ru
-      - ./nginx/conf.d/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/www:/var/www/impisigmatus.ru
     ports:
       - 8000:443
