@@ -1,25 +1,27 @@
 <template>
   <pce-top-bar />
   <router-view />
+  <pce-footer />
+  <transition name="bounce">
+    <a v-show="arrow" href="#about" class="pageup">
+      <svg
+        class="up"
+        viewBox="0 0 26 26"
+        fill="#fff"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M26 0H0V26H26V0ZM4.6593 17.7519L13.1233 10.33L21.5873 17.7519L22.9059 16.2481L13.7826 8.24813L13.1233 7.67L12.464 8.24813L3.3407 16.2481L4.6593 17.7519Z"
+          fill="black"
+        />
+      </svg>
+    </a>
+  </transition>
   <div v-show="timer" class="callnowbutton">
     <a class="phone" href="tel:+7999999999"> Связаться с нами </a>
   </div>
-  <pce-footer />
-  <a v-show="arrow" href="#about" class="pageup">
-    <svg
-      class="up"
-      viewBox="0 0 26 26"
-      fill="#fff"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M26 0H0V26H26V0ZM4.6593 17.7519L13.1233 10.33L21.5873 17.7519L22.9059 16.2481L13.7826 8.24813L13.1233 7.67L12.464 8.24813L3.3407 16.2481L4.6593 17.7519Z"
-        fill="black"
-      />
-    </svg>
-  </a>
 </template>
 
 <script>
@@ -34,11 +36,11 @@ export default {
     changeVisibleCallButton() {
       setTimeout(() => {
         this.timer = true;
-      }, 6000);
+      }, 10000);
     },
     changeVisibleArrowUp() {
       window.addEventListener('scroll', () => {
-        if (document.documentElement.scrollTop > 1200) {
+        if (document.documentElement.scrollTop >= 1200) {
           this.arrow = true;
         } else {
           this.arrow = false;
@@ -68,6 +70,23 @@ export default {
   transition: all 0.25s ease-out;
   box-sizing: border-box;
 }
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  transition: 1s all;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .pageup {
   width: 26px;
   height: 26px;
@@ -78,7 +97,6 @@ export default {
   background-color: #fff;
   cursor: pointer;
   border: 1px solid white;
-  transition: 1s all;
 }
 /* TODO: могут понадобится стили */
 /* $main-color: #377dff; */
