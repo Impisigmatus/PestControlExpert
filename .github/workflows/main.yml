@@ -19,7 +19,7 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/id_ed25519_impisigmatus
           chmod 600 ~/.ssh/id_ed25519_impisigmatus
           cat >> ~/.ssh/config << END
-          Host impisigmatus
+          Host pce
             HostName $SSH_HOSTNAME
             User $SSH_USERNAME
             IdentityFile ~/.ssh/id_ed25519_impisigmatus
@@ -27,7 +27,4 @@ jobs:
           END
 
       - name: Clone
-        run: ssh impisigmatus 'rm -rf pestcontrolexpert/ && git clone https://github.com/Impisigmatus/PestControlExpert.git && chmod -R 777 pestcontrolexpert/'
-
-      - name: Run
-        run: ssh impisigmatus 'cd pestcontrolexpert && docker-compose build && docker-compose up -d --force-recreate'
+        run: ssh pce 'cd src/ && rm -rf PestControlExpert/ && git clone git@github.com:Impisigmatus/PestControlExpert.git && chmod -R 777 PestControlExpert/'
