@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <header class="navbar">
     <div class="navbar__logo">
       <img
         class="navbar__img"
@@ -25,7 +25,7 @@
         </a></pce-button
       >
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -93,10 +93,11 @@ export default {
 
 @media (max-width: 768px) {
   .navbar {
-    height: 150px;
+    height: 200px;
   }
   .navbar__btns {
-    display: none;
+    display: block;
+    margin-bottom: 20px;
   }
   .navbar__logo {
     display: flex;
@@ -109,6 +110,9 @@ export default {
   }
   .navbar__title {
     font-size: 10px;
+  }
+  .navbar__contact {
+    display: none;
   }
 }
 </style>
