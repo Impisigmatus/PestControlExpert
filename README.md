@@ -1,4 +1,4 @@
-# pce
+# PestControlExpert
 
 ## Project setup
 ```
