@@ -3,10 +3,12 @@
   <section class="promo" id="about">
     <div class="promo__title">
       <img class="promo__img" src="@/assets/mumu.png" alt="#" />
-      <p>
-        <b>Pest Control Expert</b> эксклюзивно предоставляет услуги сети кафе
-        Му-му. Помимо этого помогли более <b>100 клиентам</b> по Москве и
-        Московской области
+      <p class="promo__title_text">
+        <b>PestControlExpert</b> эксклюзивно предоставляет услуги по проведению
+        дезинфекционных мероприятий: мониторинг, дезинфекции, дезинсекции,
+        дератизации сети <b>кафу МУ-МУ</b>. Помимо этого, на постоянной основе -
+        по договорам, помогаем более <b>50 клиентам</b> и более
+        <b>100 клиентам</b> по разовым услугам на территории г. Москвы и МО.
       </p>
     </div>
   </section>
@@ -267,6 +269,11 @@ export default {
 }
 .services__icon_animated:hover {
   animation-play-state: paused;
+}
+
+.promo__title_text {
+  padding: 20px 50px;
+  font-size: 30px;
 }
 
 @keyframes heartbeat {
