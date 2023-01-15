@@ -1,57 +1,64 @@
 <template>
   <section class="price" id="prices">
-    <h2 class="title__section-title">Прайс-лист</h2>
+    <h2 class="title__section-title">Прайс-лист (цены указаны в рублях)</h2>
+    <h3 class="title__section-title">Таблица цен на услуги до 150 кв. м</h3>
     <div class="divider"></div>
     <div class="price__wrapper">
       <div class="price__item">
-        <div class="price__type">Дезинсекция</div>
-        <div class="price__count">от 500р</div>
+        <div class="price__type">Мониторинг</div>
+        <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
+            <li>701 р.</li>
+            <li>1500 р. (Премиум)</li>
           </ul>
         </div>
       </div>
       <div class="price__item">
         <div class="price__type">Дератизация</div>
-        <div class="price__count">от 500р</div>
+        <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
+            <li>1600 р.</li>
+            <li>3000 р. (Премиум)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="price__item">
+        <div class="price__type">Дезинсекция</div>
+        <div class="price__count"></div>
+        <div class="price__descr">
+          <ul>
+            <li>1850 р.</li>
+            <li>3700 р. (Премиум)</li>
           </ul>
         </div>
       </div>
       <div class="price__item">
         <div class="price__type">Дезинфекция</div>
-        <div class="price__count">от 500р</div>
+        <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
+            <li>6500 р.</li>
+            <li>9900 р. (Премиум)</li>
           </ul>
         </div>
       </div>
       <div class="price__item">
         <div class="price__type">СЭО</div>
-        <div class="price__count">Индивидуально</div>
+        <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
-            <li>Услуга</li>
+            <li>4500 р.</li>
+            <li>8000 р. (Премиум)</li>
           </ul>
         </div>
       </div>
     </div>
+    <h3 class="title__section-title">
+      Цена услуги зависит: от площади, комплексности услуг, заселенности
+      помещений и вида членистоногих.
+    </h3>
   </section>
 </template>
 
@@ -69,7 +76,7 @@ export default {
   margin-top: 60px;
   padding: 0 60px;
   display: grid;
-  grid-template: repeat(1, minmax(45px, auto)) / repeat(4, 265px);
+  grid-template: repeat(1, minmax(45px, auto)) / repeat(5, 265px);
   grid-auto-rows: minmax(45px, auto);
   row-gap: 15px;
   justify-content: space-between;
@@ -78,7 +85,7 @@ export default {
   position: relative;
   display: grid;
   grid-template: repeat(3, minmax(21px, auto)) / repeat(2, auto);
-  row-gap: 5px;
+  row-gap: 15px;
   padding-left: 25px;
   column-gap: 5px;
 }
@@ -102,8 +109,8 @@ export default {
 }
 .price__descr {
   grid-column: 0.3333333333;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 20px;
+  line-height: 22px;
 }
 @media (max-width: 992px) {
   .price__wrapper {
