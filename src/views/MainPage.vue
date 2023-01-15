@@ -24,10 +24,9 @@
         />
         <div class="services__subtitle">Дезинсекция</div>
         <div class="services__descr">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
-          illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
-          quia unde molestiae officia, voluptate autem. Consectetur ullam ex
-          molestias.
+          Комплекс мероприятий направленных на уничтожение патогенных
+          (болезнетворных) и условно-патогенных микроорганизмов в окружающей
+          человека среде.
         </div>
       </div>
       <div class="services__item">
@@ -38,10 +37,11 @@
         />
         <div class="services__subtitle">Дератизация</div>
         <div class="services__descr">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
-          illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
-          quia unde molestiae officia, voluptate autem. Consectetur ullam ex
-          molestias.
+          Дератизационные мероприятия - включают в себя комплекс
+          организационных, профилактических, истребительных мер, проводимых
+          юридическими и физическими лицами, с целью ликвидации или снижения
+          численности грызунов и уменьшения их вредного воздействия на человека
+          и окружающую его среду.
         </div>
       </div>
       <div class="services__item">
@@ -52,20 +52,24 @@
         />
         <div class="services__subtitle">Дезинфекция</div>
         <div class="services__descr">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
-          illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
-          quia unde molestiae officia, voluptate autem. Consectetur ullam ex
-          molestias.
+          Комплекс мероприятий, направленный на уничтожение возбудителей
+          инфекционных заболеваний и разрушение токсинов на объектах внешней
+          среды для предотвращения попадания их на кожу, слизистые и раневую
+          поверхность.
         </div>
       </div>
       <div class="services__item">
         <img src="@/assets/images/ceo.png" alt="ceo" class="services__icon" />
-        <div class="services__subtitle">СЭО</div>
+        <div class="services__subtitle">
+          Санитарно-эпидемиологическое обследование
+        </div>
         <div class="services__descr">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit
-          illo maiores ipsam. Sint reiciendis enim non blanditiis totam illo
-          quia unde molestiae officia, voluptate autem. Consectetur ullam ex
-          molestias.
+          Деятельность, направленная на установление соответствия
+          (несоответствия) требованиям технических регламентов, государственных
+          санитарно-эпидемиологических правил и нормативов производственных,
+          общественных помещений, зданий, сооружений, оборудования, транспорта,
+          технологического оборудования, технологических процессов, рабочих
+          мест.
         </div>
       </div>
     </div>
@@ -235,7 +239,8 @@ export default {
   margin-top: 10px;
 }
 .services__title {
-  padding: 15px;
+  padding: 40px 20px;
+  font-size: 30px;
   color: #fff;
 }
 .services__subtitle {
@@ -257,8 +262,8 @@ export default {
 }
 
 .services__icon {
-  width: 100%;
-  height: 100%;
+  width: 230px;
+  height: 230px;
 }
 
 .services__icon_animated {
