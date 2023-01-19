@@ -6,7 +6,7 @@ services:
     restart: always
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./www/dist:/var/www/pestcontrolexpert.ru
+      - www:/var/www/pestcontrolexpert.ru
       - ./nginx:/var/log/nginx/
     ports:
       - 8000:80
@@ -31,3 +31,8 @@ services:
     build: www/
     container_name: nodejs
     restart: always
+    volumes:
+      - www:/src/dist
+
+volumes:
+  www:
