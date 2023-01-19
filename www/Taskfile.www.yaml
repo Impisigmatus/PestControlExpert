@@ -1,0 +1,7 @@
+version: 3
+
+tasks:
+  run:
+    desc: Генерация графа CPU-time
+    cmds:
+      - cd www/ && npm install && npm run lint && npm run build

@@ -1,0 +1,11 @@
+version: 3
+
+includes:
+  www:
+    taskfile: www/Taskfile.www.yaml
+
+tasks:
+  default:
+    desc: Список задач
+    cmds:
+      - task --list
