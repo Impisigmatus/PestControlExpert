@@ -15,7 +15,6 @@ services:
      - NGINX_PORT=80
     links:
       - portainer
-      - nodejs
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -26,8 +25,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./portainer-data:/data
-
-  nodejs:
-    build: www/
-    container_name: nodejs
-    restart: always
