@@ -16,7 +16,7 @@
         <a href="#prices" class="footer__links_page">Цены</a>
         <a href="#form" class="footer__links_page">Форма обратной связи</a>
         <a href="#map" class="footer__links_page">Карта покрытия</a>
-        <a href="/privacy" class="footer__links_privacy"
+        <a href="./privacy.html" class="footer__links_privacy"
           >Политика конфиденциальности
         </a>
       </div>
