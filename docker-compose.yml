@@ -1,11 +1,10 @@
 version: "3"
 services:
   nginx:
-    image: nginx-alpine:latest
+    image: nginx:alpine-slim
     container_name: nginx
     restart: always
     volumes:
-      - /opt/impisigmatus.ru:/opt/impisigmatus.ru
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/www:/var/www/impisigmatus.ru
     ports:
