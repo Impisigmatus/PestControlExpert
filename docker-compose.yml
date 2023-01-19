@@ -6,7 +6,7 @@ services:
     restart: always
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/www:/var/www/impisigmatus.ru
+      - ./www/dist:/var/www/pestcontrolexpert.ru
       - ./nginx:/var/log/nginx/
     ports:
       - 8000:80
