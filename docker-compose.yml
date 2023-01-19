@@ -7,6 +7,7 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/www:/var/www/impisigmatus.ru
+      - ./nginx:/var/log/nginx/
     ports:
       - 8000:80
     environment:
