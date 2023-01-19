@@ -20,6 +20,10 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: always
+    ports:
+      - 8000:8000
+      - 9000:9000
+      - 9433:9433
     security_opt:
       - no-new-privileges:true
     volumes:
@@ -30,3 +34,5 @@ services:
     build: www/
     container_name: nodejs
     restart: always
+    ports:
+      - 8001:8080
