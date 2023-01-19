@@ -28,3 +28,6 @@ jobs:
 
       - name: Clone
         run: ssh pce 'cd src/ && rm -rf PestControlExpert/ && git clone git@github.com:Impisigmatus/PestControlExpert.git && chmod -R 777 PestControlExpert/'
+
+      - name: Run
+        run: ssh pct 'cd src/PestControlExpert && docker-compose build && docker-compose up -d --force-recreate'
