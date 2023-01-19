@@ -29,5 +29,8 @@ jobs:
       - name: Pull
         run: ssh pce 'cd src/PestControlExpert && git pull origin master'
 
+      - name: Build
+        run: ssh pce 'cd src/PestControlExpert/www && docker build -t env -f Dockerfile.env . && docker run --user $(id -u):$(id -g) --rm -v $PWD:/src --workdir /src -it {{.IMAGE}} /bin/sh -c "npm install && npm run lint && npm run build'
+
       - name: Run
         run: ssh pce 'cd src/PestControlExpert && docker-compose build && docker-compose up -d --force-recreate'

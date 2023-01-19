@@ -6,6 +6,7 @@ services:
     restart: always
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./www/dist:/var/www/pestcontrolexpert.ru
       - ./nginx:/var/log/nginx/
     ports:
       - 80:80
