@@ -1,7 +1,7 @@
 name: CICD
 on: 
   push:
-    branches: [ master, feature/PCE-21/deploy ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -27,7 +27,7 @@ jobs:
           END
 
       - name: Pull
-        run: ssh pce 'cd src/PestControlExpert && git pull origin feature/PCE-21/deploy'
+        run: ssh pce 'cd src/PestControlExpert && git pull origin master'
 
       - name: Run
         run: ssh pce 'cd src/PestControlExpert && docker-compose build && docker-compose up -d --force-recreate'
