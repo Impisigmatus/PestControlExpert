@@ -1,8 +1,8 @@
 FROM alpine:latest
 
 RUN apk add --no-cache --update npm && \
-  npm config set fetch-retry-mintimeout 20000 && \
-  npm config set fetch-retry-maxtimeout 120000
+  npm config set fetch-retry-mintimeout 99999 && \
+  npm config set fetch-retry-maxtimeout 999999
 
 RUN mkdir -p /.npm && chmod -R 777 /.npm
 ADD . /src
