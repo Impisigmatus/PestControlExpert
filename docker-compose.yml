@@ -5,8 +5,7 @@ services:
     container_name: nginx
     restart: always
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/www:/var/www/pestcontrolexpert.ru
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx:/var/log/nginx/
     ports:
       - 8000:80
