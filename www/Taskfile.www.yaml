@@ -1,0 +1,17 @@
+version: 3
+
+tasks:
+  run:
+    desc: Запуск NodeJS
+    vars:
+      IMAGE: pest_control_expert/nodejs
+    cmds:
+      - cd www/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run -d -p 8080:8080 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
+
+  build:
+    desc: Сборка NodeJS
+    vars:
+      IMAGE: env
+    cmds:
+      - cd www/ && docker build -t {{.IMAGE}} -f Dockerfile.env .
+      - cd www/ && docker run --user $(id -u):$(id -g) --rm -v $PWD:/src --workdir /src -it {{.IMAGE}} /bin/sh -c "npm install && npm run lint && npm run build"
