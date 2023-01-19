@@ -2,6 +2,6 @@ version: 3
 
 tasks:
   run:
-    desc: Генерация графа CPU-time
+    desc: Сборка NodeJS
     cmds:
       - cd www/ && npm install && npm run lint && npm run build
