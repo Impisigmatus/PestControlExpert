@@ -1,9 +1,9 @@
 name: CICD
 on: 
   push:
-    branches: [ master ]
-  pull_request:
     branches: [ master, feature/PCE-21/deploy ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   deploy:
