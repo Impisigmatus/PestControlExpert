@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add --no-cache --update npm
+RUN apk add --no-cache --update npm=8.5.1
 
 RUN mkdir -p /.npm && chmod -R 777 /.npm
 ADD . /src
