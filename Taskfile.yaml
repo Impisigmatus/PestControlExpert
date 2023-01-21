@@ -3,6 +3,8 @@ version: 3
 includes:
   www:
     taskfile: www/Taskfile.www.yaml
+  notification:
+    taskfile: notification/Taskfile.notification.yaml
 
 tasks:
   default:

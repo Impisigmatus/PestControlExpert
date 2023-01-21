@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"path"
 	"runtime"
-	"time"
 
+	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/notification/internal/service"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/telegram"
 	"github.com/sirupsen/logrus"
 )
@@ -30,8 +32,17 @@ func main() {
 	)
 	bot := telegram.NewBot(os.Getenv(token), os.Getenv(password))
 
-	time.Sleep(10 * time.Second)
-	if err := bot.Send("Оповещение"); err != nil {
-		logrus.Panicf("Invalid send: %s", err)
+	transport := service.NewTransport(bot)
+	router := http.NewServeMux()
+	router.Handle("/api/", autogen.Handler(transport))
+
+	const addr = ":8000"
+	server := &http.Server{
+		Addr:    addr,
+		Handler: router,
+	}
+
+	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		logrus.Panic(err)
 	}
 }

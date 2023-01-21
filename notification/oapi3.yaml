@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: PPestControlExpert Notification API
+  description: |
+    %README.md%
+
+tags:
+  - name: add
+    x-displayName: Создание
+
+paths:
+  "/api/notify":
+    post:
+      tags:
+        - add
+      summary: Отправка оповещения
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        "204":
+          description: Успешная отправка оповещения
+        "400":
+          description: Ошибка валидации входных данных
+        "500":
+          description: Внутренняя ошибка сервиса
+
+components:
+  schemas:
+    Message:
+      type: object
+      description: Оповещение
+      required:
+        - data
+      properties:
+        data:
+          type: string
+          description: Текст оповещения
+          x-oapi-codegen-extra-tags:
+            validate: required
