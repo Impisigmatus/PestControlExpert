@@ -13,6 +13,6 @@ tasks:
       - task --list
 
   compose:
-    desc: CI/CD сервисов
+    desc: Локальный CI/CD сервисов
     cmds:
       - docker-compose build && docker-compose up -d --force-recreate
