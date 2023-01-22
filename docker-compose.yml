@@ -28,7 +28,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./portainer-data:/data
     ports:
+      - 8000:8000
       - 9000:9000
+      - 9443:9443
 
   notification:
     build: notification/
@@ -37,5 +39,3 @@ services:
     environment:
      - PCE_TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
      - PCE_SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
-    ports:
-      - 8000:8000
