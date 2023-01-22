@@ -33,3 +33,6 @@ services:
     build: notification/
     container_name: api_Notification
     restart: always
+    environment:
+     - PCE_TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
+     - PCE_SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
