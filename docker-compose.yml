@@ -13,8 +13,11 @@ services:
     environment:
      - NGINX_HOST=pestcontrolexpert.ru
      - NGINX_PORT=80
+    networks:
+      - services-net
     links:
       - portainer
+      - notification
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -27,3 +30,17 @@ services:
       - ./portainer-data:/data
     ports:
       - 9000:9000
+
+  notification:
+    build: notification/
+    container_name: api_Notification
+    restart: always
+    environment:
+      - PCE_TELEGRAM_API_TOKEN=<TOKEN>
+      - PCE_SUBSCRIBE_PASSWORD=<PASSWORD>
+    networks:
+      - services-net
+
+networks:
+  services-net:
+    driver: bridge

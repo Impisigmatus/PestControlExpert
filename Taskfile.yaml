@@ -3,9 +3,16 @@ version: 3
 includes:
   www:
     taskfile: www/Taskfile.www.yaml
+  notification:
+    taskfile: notification/Taskfile.notification.yaml
 
 tasks:
   default:
     desc: Список задач
     cmds:
       - task --list
+
+  compose:
+    desc: CI/CD сервисов
+    cmds:
+      - docker-compose build && docker-compose up -d --force-recreate

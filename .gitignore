@@ -1,6 +1,10 @@
 .DS_Store
 node_modules
 www/dist
+**/vendor**
+*\.env
+*\.log
+**/autogen**
 
 # local env files
 .env.local

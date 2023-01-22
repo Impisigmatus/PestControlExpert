@@ -11,5 +11,5 @@ RUN chmod -R 777 /src
 WORKDIR /src
 RUN npm install
 
-EXPOSE 8080
+EXPOSE 8000
 ENTRYPOINT exec npm run serve
