@@ -1,6 +1,15 @@
 version: 3
 
 tasks:
+  run:
+    desc: Запуск сервиса оповещений
+    vars:
+      IMAGE: pest_control_expert/notification
+    cmds:
+      - cd notification/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run --env-file .env -d -p 8000:8000 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
+    deps:
+      - autogen
+
   autogen:
     desc: Автогенерация OpenAPI 3
     deps:
