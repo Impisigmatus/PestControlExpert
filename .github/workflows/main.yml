@@ -36,4 +36,4 @@ jobs:
         env:
           TELEGRAM_API_TOKEN: ${{ secrets.TELEGRAM_API_TOKEN }}
           NOTIFY_SUBSCRIBE_PASSWORD: ${{ secrets.NOTIFY_SUBSCRIBE_PASSWORD }}
-        run: ssh pce 'cd src/PestControlExpert && export PCE_TELEGRAM_API_TOKEN=$TELEGRAM_API_TOKEN && export PCE_SUBSCRIBE_PASSWORD=$NOTIFY_SUBSCRIBE_PASSWORD && docker-compose convert && docker-compose build && docker-compose up -d --force-recreate'
+        run: ssh pce 'cd src/PestControlExpert && docker-compose build && echo PCE_TELEGRAM_API_TOKEN=$TELEGRAM_API_TOKEN > .env && echo PCE_SUBSCRIBE_PASSWORD=$NOTIFY_SUBSCRIBE_PASSWORD >> .env && docker-compose up -d --force-recreate'
