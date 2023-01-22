@@ -13,8 +13,6 @@ services:
     environment:
      - NGINX_HOST=pestcontrolexpert.ru
      - NGINX_PORT=80
-    networks:
-      - services-net
     links:
       - portainer
       - notification
@@ -35,9 +33,3 @@ services:
     build: notification/
     container_name: api_Notification
     restart: always
-    networks:
-      - services-net
-
-networks:
-  services-net:
-    driver: bridge
