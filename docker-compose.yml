@@ -35,9 +35,6 @@ services:
     build: notification/
     container_name: api_Notification
     restart: always
-    environment:
-      - PCE_TELEGRAM_API_TOKEN=<TOKEN>
-      - PCE_SUBSCRIBE_PASSWORD=<PASSWORD>
     networks:
       - services-net
 
