@@ -11,3 +11,8 @@ tasks:
     desc: Список задач
     cmds:
       - task --list
+
+  compose:
+    desc: CI/CD сервисов
+    cmds:
+      - docker-compose build && docker-compose up -d --force-recreate

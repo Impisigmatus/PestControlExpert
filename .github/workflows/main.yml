@@ -33,4 +33,7 @@ jobs:
         run: ssh pce 'cd src/PestControlExpert/www && docker build -t env -f Dockerfile.env . && docker run --rm -v $PWD:/src --workdir /src env /bin/sh -c "npm install && npm run build"'
 
       - name: Run
-        run: ssh pce 'cd src/PestControlExpert && docker-compose build && docker-compose up -d --force-recreate'
+        env:
+          TELEGRAM_API_TOKEN: ${{ secrets.TELEGRAM_API_TOKEN }}
+          NOTIFY_SUBSCRIBE_PASSWORD: ${{ secrets.NOTIFY_SUBSCRIBE_PASSWORD }}
+        run: ssh pce 'cd src/PestControlExpert && echo -e "PCE_TELEGRAM_API_TOKEN:$TELEGRAM_API_TOKEN\PCE_SUBSCRIBE_PASSWORD:$NOTIFY_SUBSCRIBE_PASSWORD" > ../.env && docker-compose build && docker-compose up --env-file ../.env -d --force-recreate'
