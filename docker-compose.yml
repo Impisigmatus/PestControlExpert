@@ -24,6 +24,7 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./portainer-data:/data
     ports:
@@ -36,3 +37,5 @@ services:
     environment:
      - PCE_TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
      - PCE_SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
+    ports:
+      - 8000:8000
