@@ -13,6 +13,8 @@ RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
 
 # Service
 FROM alpine:latest
+ADD .env .
+RUN source .env
 EXPOSE 8000
 COPY --from=builder /build/notification /usr/bin
 USER nobody
