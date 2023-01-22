@@ -1,11 +1,16 @@
 # Builder
 FROM golang:1.19-alpine AS builder
-RUN go install github.com/go-task/task/v3/cmd/task@latest
-ADD ../Taskfile.yaml /src
 ADD . /src/notification
 WORKDIR /src/notification
-RUN task notification:autogen && \
-    CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
+RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest \
+    [ -x "$(command -v redoc-cli)" ] || npm i -g --prefix=/opt/npm redoc-cli \
+    mkdir -p autogen \
+    sed -e 's/^/    /' README.md > autogen/README.md \
+    sed -e '/    %README.md%/{' -e "r autogen/README.md" -e 'd' -e '}' oapi3.yaml > autogen/oapi3.yaml \
+    oapi-codegen -o autogen/server.go -old-config-style -package autogen -generate chi-server autogen/oapi3.yaml \
+    oapi-codegen -o autogen/types.go  -old-config-style -package autogen -generate types      autogen/oapi3.yaml \
+    oapi-codegen -o autogen/client.go -old-config-style -package autogen -generate client     autogen/oapi3.yaml
+RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
 
 # Service
 FROM alpine:latest
