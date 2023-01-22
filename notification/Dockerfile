@@ -3,7 +3,6 @@ FROM golang:1.19-alpine AS builder
 ADD . /src/notification
 WORKDIR /src/notification
 RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest && \
-    [ -x "$(command -v redoc-cli)" ] || npm i -g --prefix=/opt/npm redoc-cli && \
     mkdir -p autogen && \
     sed -e 's/^/    /' README.md > autogen/README.md && \
     sed -e '/    %README.md%/{' -e "r autogen/README.md" -e 'd' -e '}' oapi3.yaml > autogen/oapi3.yaml && \
