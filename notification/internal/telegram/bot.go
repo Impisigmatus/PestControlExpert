@@ -55,11 +55,19 @@ func (bot *Bot) consume() {
 		for update := range updates {
 			if update.Message != nil {
 				if update.Message.Text == bot.pass {
-					if err := bot.db.AddSubscriber(update.Message.Chat.ID); err != nil {
+					ok, err := bot.db.AddSubscriber(update.Message.Chat.ID)
+					if err != nil {
 						logrus.Panicf("Invalid add subscriber: %s", err)
 					}
 
-					msg := tg.NewMessage(update.Message.Chat.ID, "Вы успешно подписаны на оповещения от сервисов сайта Pest Control Expert")
+					var text string
+					if ok {
+						text = "Вы уже были подписаны на оповещения от сервисов сайта Pest Control Expert"
+					} else {
+						text = "Вы успешно подписаны на оповещения от сервисов сайта Pest Control Expert"
+					}
+
+					msg := tg.NewMessage(update.Message.Chat.ID, text)
 					msg.ReplyToMessageID = update.Message.MessageID
 					if _, err := bot.api.Send(msg); err != nil {
 						logrus.Panicf("Invalid send msg: %s", err)
