@@ -9,7 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const path = "mem.db.json"
+const path = "/opt/mem.db.json"
 
 type MemDB struct {
 	subsribers map[int64]interface{}
