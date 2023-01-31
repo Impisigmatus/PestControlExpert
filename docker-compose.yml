@@ -31,7 +31,7 @@ services:
       - 9000:9000
 
   database:
-    image: postgres
+    image: postgres:alpine
     restart: always
     ports:
       - 5432:5432
