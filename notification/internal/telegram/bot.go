@@ -14,7 +14,7 @@ type Bot struct {
 	pass string
 }
 
-func NewBot(token string, pass string) *Bot {
+func NewBot(cfg database.PostgresConfig, token string, pass string) *Bot {
 	api, err := tg.NewBotAPI(token)
 	if err != nil {
 		logrus.Panicf("Invalid telegram bot: %s", err)
@@ -22,7 +22,7 @@ func NewBot(token string, pass string) *Bot {
 
 	bot := &Bot{
 		api:  api,
-		db:   database.NewMemDB(),
+		db:   database.NewPostgres(cfg),
 		pass: pass,
 	}
 

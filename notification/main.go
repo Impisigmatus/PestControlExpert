@@ -12,6 +12,7 @@ import (
 	"syscall"
 
 	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/middlewares"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/service"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/telegram"
@@ -36,7 +37,15 @@ func main() {
 		password = "PCE_SUBSCRIBE_PASSWORD"
 		auth     = "APIS_AUTH_BASIC"
 	)
-	bot := telegram.NewBot(os.Getenv(token), os.Getenv(password))
+
+	cfg := database.PostgresConfig{
+		Hostname: "localhost",
+		Port:     5432,
+		Database: "postgres",
+		User:     "dev",
+		Password: "test",
+	}
+	bot := telegram.NewBot(cfg, os.Getenv(token), os.Getenv(password))
 
 	transport := service.NewTransport(bot)
 	router := http.NewServeMux()
