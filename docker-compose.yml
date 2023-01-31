@@ -30,6 +30,26 @@ services:
     ports:
       - 9000:9000
 
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 8000:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    depends_on:
+      - database
+
   notification:
     build: notification/
     container_name: api_Notification
@@ -37,3 +57,5 @@ services:
     environment:
      - PCE_TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
      - PCE_SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
+    depends_on:
+      - database
