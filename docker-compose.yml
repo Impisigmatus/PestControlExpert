@@ -30,10 +30,44 @@ services:
     ports:
       - 9000:9000
 
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: pestcontrolexpert
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 8000:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    depends_on:
+      - database
+
   notification:
     build: notification/
     container_name: api_Notification
     restart: always
     environment:
-     - PCE_TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
-     - PCE_SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
+      - ADDRESS=:8000
+      - POSTGRES_HOSTNAME=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=pestcontrolexpert
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGADMIN_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_PASSWORD=${PGADMIN_PASSWORD}
+      - TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
+      - SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
+      - APIS_AUTH_BASIC=${APIS_AUTH_BASIC}
+    depends_on:
+      - database

@@ -8,10 +8,12 @@ import (
 	"os/signal"
 	"path"
 	"runtime"
+	"strconv"
 	"strings"
 	"syscall"
 
 	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/middlewares"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/service"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/telegram"
@@ -32,13 +34,37 @@ func init() {
 
 func main() {
 	const (
-		token    = "PCE_TELEGRAM_API_TOKEN"
-		password = "PCE_SUBSCRIBE_PASSWORD"
-		auth     = "APIS_AUTH_BASIC"
+		base       = 10
+		size       = 64
+		address    = "ADDRESS"
+		token      = "TELEGRAM_API_TOKEN"
+		password   = "SUBSCRIBE_PASSWORD"
+		auth       = "APIS_AUTH_BASIC"
+		pgHost     = "POSTGRES_HOSTNAME"
+		pgPort     = "POSTGRES_PORT"
+		pgDB       = "POSTGRES_DATABASE"
+		pgUser     = "POSTGRES_USER"
+		pgPassword = "POSTGRES_PASSWORD"
 	)
-	bot := telegram.NewBot(os.Getenv(token), os.Getenv(password))
 
-	transport := service.NewTransport(bot)
+	port, err := strconv.ParseUint(os.Getenv(pgPort), base, size)
+	if err != nil {
+		logrus.Panicf("Invalid postgres port: %s", err)
+	}
+
+	transport := service.NewTransport(
+		telegram.NewBot(
+			database.PostgresConfig{
+				Hostname: os.Getenv(pgHost),
+				Port:     port,
+				Database: os.Getenv(pgDB),
+				User:     os.Getenv(pgUser),
+				Password: os.Getenv(pgPassword),
+			},
+			os.Getenv(token),
+			os.Getenv(password),
+		),
+	)
 	router := http.NewServeMux()
 	router.Handle("/api/",
 		middlewares.Use(middlewares.Use(autogen.Handler(transport),
@@ -47,9 +73,8 @@ func main() {
 		),
 	)
 
-	const addr = ":8000"
 	server := &http.Server{
-		Addr:    addr,
+		Addr:    os.Getenv(address),
 		Handler: router,
 	}
 

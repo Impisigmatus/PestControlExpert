@@ -1,6 +1,10 @@
 version: 3
 
+dotenv: ['.env']
+
 includes:
+  migration:
+    taskfile: migration/Taskfile.migration.yaml
   www:
     taskfile: www/Taskfile.www.yaml
   notification:

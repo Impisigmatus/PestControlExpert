@@ -1,6 +1,8 @@
 package database
 
+import "github.com/Impisigmatus/PestControlExpert/notification/internal/models"
+
 type Database interface {
-	GetSubscribers() ([]int64, error)
-	AddSubscriber(id int64) (bool, error)
+	GetSubscribers() ([]models.Subscriber, error)
+	AddSubscriber(subscriber models.Subscriber) (bool, error)
 }

@@ -8,10 +8,13 @@ tasks:
     cmds:
       - cd notification/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run --env-file .env -d -p 8000:8000 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
     deps:
-      - autogen
+      - update
 
-  autogen:
-    desc: Автогенерация OpenAPI 3
+  update:
+    desc: Автогенерация OpenAPI 3 и обновление зависимостей
+    cmds:
+      - cd notification/ && go mod tidy
+      - cd notification/ && go mod vendor
     deps:
       - oapi3-code-gen
 

@@ -1,0 +1,24 @@
+version: 3
+
+vars:
+  MIGRATIONS_DIR: ./migrations
+  CONNECTION: postgres://{{.POSTGRES_USER}}:{{.POSTGRES_PASSWORD}}@{{.POSTGRES_HOSTNAME}}:{{.POSTGRES_PORT}}/{{.POSTGRES_DATABASE}}?sslmode=disable
+
+tasks:
+  up:
+    desc: Создание схемы БД
+    cmds:
+      - cd migration/ && migrate -source file://{{.MIGRATIONS_DIR}} -database {{.CONNECTION}} up
+    deps:
+      - dependencies
+
+  down:
+    desc: Удаление схемы БД
+    cmds:
+      - cd migration/ && migrate -source file://{{.MIGRATIONS_DIR}} -database {{.CONNECTION}} down
+    deps:
+      - dependencies
+
+  dependencies:
+    cmds:
+      - '[ -x "$(command -v oapi-migrate)" ] || go install -tags "postgres" github.com/golang-migrate/migrate/v4/cmd/migrate@latest'
