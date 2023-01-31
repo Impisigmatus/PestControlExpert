@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
+	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/sirupsen/logrus"
 )
@@ -31,15 +32,15 @@ func NewBot(cfg database.PostgresConfig, token string, pass string) *Bot {
 }
 
 func (bot *Bot) Send(msg string) error {
-	ids, err := bot.db.GetSubscribers()
+	subscribers, err := bot.db.GetSubscribers()
 	if err != nil {
 		return fmt.Errorf("Invalid subscribers: %s", err)
 	}
 
-	for _, id := range ids {
-		msg := tg.NewMessage(id, msg)
+	for _, subscriber := range subscribers {
+		msg := tg.NewMessage(subscriber.ChatID, msg)
 		if _, err := bot.api.Send(msg); err != nil {
-			return fmt.Errorf("Invalid send msg: %s", err)
+			return fmt.Errorf("Invalid send msg for %s@%s[%d]: %s", subscriber.Name, subscriber.Username, subscriber.ChatID, err)
 		}
 	}
 
@@ -55,7 +56,11 @@ func (bot *Bot) consume() {
 		for update := range updates {
 			if update.Message != nil {
 				if update.Message.Text == bot.pass {
-					ok, err := bot.db.AddSubscriber(update.Message.Chat.ID)
+					ok, err := bot.db.AddSubscriber(models.Subscriber{
+						ChatID:   update.Message.Chat.ID,
+						Username: update.Message.From.UserName,
+						Name:     update.Message.From.FirstName,
+					})
 					if err != nil {
 						logrus.Panicf("Invalid add subscriber: %s", err)
 					}

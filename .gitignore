@@ -3,6 +3,7 @@ node_modules
 www/dist
 **/vendor**
 **/portainer-data**
+**/postgres-data**
 *\.env
 *\.log
 **/autogen**

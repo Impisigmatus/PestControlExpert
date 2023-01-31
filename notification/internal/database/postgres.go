@@ -1,7 +1,6 @@
 package database
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 
@@ -13,7 +12,7 @@ import (
 
 type PostgresConfig struct {
 	Hostname string
-	Port     uint32
+	Port     uint64
 	Database string
 	User     string
 	Password string
@@ -23,17 +22,10 @@ type Postgres struct {
 	db *sqlx.DB
 }
 
+const driver = "pgx"
+
 func NewPostgres(cfg PostgresConfig) Database {
-	const driver = "pgx"
 	return &Postgres{db: sqlx.NewDb(newPostgres(cfg), driver)}
-}
-
-func (pg *Postgres) GetSubscribers() ([]int64, error) {
-	return nil, nil // TODO
-}
-
-func (pg *Postgres) AddSubscriber(id int64) (bool, error) {
-	return false, nil // TODO
 }
 
 func newPostgres(cfg PostgresConfig) *sql.DB {
@@ -49,7 +41,7 @@ func newPostgres(cfg PostgresConfig) *sql.DB {
 	config.Logger = &pgxLogger{}
 
 	connection := stdlib.RegisterConnConfig(config)
-	db, err := sql.Open("pgx", connection)
+	db, err := sql.Open(driver, connection)
 	if err != nil {
 		logrus.Panicf("Invalid postgres connect: %s", err)
 	}
@@ -59,30 +51,4 @@ func newPostgres(cfg PostgresConfig) *sql.DB {
 	}
 
 	return db
-}
-
-type pgxLogger struct{}
-
-func (*pgxLogger) Log(ctx context.Context, level pgx.LogLevel, msg string, data map[string]interface{}) {
-	var logger logrus.FieldLogger
-	if data != nil {
-		logger = logrus.StandardLogger().WithFields(data)
-	} else {
-		logger = logrus.StandardLogger()
-	}
-
-	switch level {
-	case pgx.LogLevelTrace:
-		logger.WithField("PGX_LOG_LEVEL", level).Debug(msg)
-	case pgx.LogLevelDebug:
-		logger.Debug(msg)
-	case pgx.LogLevelInfo:
-		logger.Info(msg)
-	case pgx.LogLevelWarn:
-		logger.Warn(msg)
-	case pgx.LogLevelError:
-		logger.Error(msg)
-	default:
-		logger.WithField("INVALID_PGX_LOG_LEVEL", level).Error(msg)
-	}
 }
