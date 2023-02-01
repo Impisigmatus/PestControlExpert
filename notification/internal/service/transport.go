@@ -42,6 +42,10 @@ func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	if notification.Description != nil && len(*notification.Description) == 0 {
+		notification.Description = nil
+	}
+
 	if err := transport.bot.Notify(notification); err != nil {
 		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid notify: %s", err), "Неудалось отправить оповещения")
 		return

@@ -119,7 +119,6 @@ func (bot *Bot) consume() {
 
 					msg := tg.NewMessage(update.Message.Chat.ID, text)
 					msg.ReplyToMessageID = update.Message.MessageID
-
 					if _, err := bot.api.Send(msg); err != nil {
 						logrus.Errorf("Invalid send msg: %s", err)
 						continue
