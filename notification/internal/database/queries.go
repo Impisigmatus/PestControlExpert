@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
+	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
 )
 
 func (pg *Postgres) GetSubscribers() ([]models.Subscriber, error) {
@@ -39,5 +41,10 @@ INSERT INTO main.subscribers (
 		return false, fmt.Errorf("Invalid rows affected: %s", err)
 	}
 
-	return affected == 0, nil // TODO
+	return affected == 0, nil
+}
+
+func (pg *Postgres) PushNotification(tx *sqlx.Tx, notification string) error {
+	logrus.Info(notification)
+	return nil
 }

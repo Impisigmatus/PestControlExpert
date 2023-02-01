@@ -6,7 +6,6 @@ import (
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )
 
@@ -32,7 +31,40 @@ func NewBot(cfg database.PostgresConfig, token string, pass string) *Bot {
 	return bot
 }
 
-func (bot *Bot) Send(msg string) error {
+func (bot *Bot) Notify(notification string) error {
+	tx, err := bot.db.GetTX()
+	if err != nil {
+		return fmt.Errorf("Invalid transaction: %s", err)
+	}
+
+	if err := bot.db.PushNotification(tx, notification); err != nil {
+		if txErr := tx.Rollback(); txErr != nil {
+			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
+		}
+
+		return fmt.Errorf("Invalid db push notification: %s", err)
+	}
+
+	if err := bot.send(notification); err != nil {
+		if txErr := tx.Rollback(); txErr != nil {
+			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
+		}
+
+		return fmt.Errorf("Invalid tg bot send notification: %s", err)
+	}
+
+	if err := tx.Commit(); err != nil {
+		if txErr := tx.Rollback(); txErr != nil {
+			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
+		}
+
+		return fmt.Errorf("Invalid commit: %s", err)
+	}
+
+	return nil
+}
+
+func (bot *Bot) send(msg string) error {
 	subscribers, err := bot.db.GetSubscribers()
 	if err != nil {
 		return fmt.Errorf("Invalid subscribers: %s", err)
@@ -46,10 +78,6 @@ func (bot *Bot) Send(msg string) error {
 	}
 
 	return nil
-}
-
-func (bot *Bot) GetTX() (*sqlx.Tx, error) {
-	return bot.db.GetTX()
 }
 
 func (bot *Bot) consume() {

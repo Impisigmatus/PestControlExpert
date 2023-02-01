@@ -14,13 +14,13 @@ import (
 )
 
 type Transport struct {
-	srv       *Service
+	bot       *telegram.Bot
 	validator *validator.Validate
 }
 
 func NewTransport(bot *telegram.Bot) autogen.ServerInterface {
 	return &Transport{
-		srv:       NewService(bot),
+		bot:       bot,
 		validator: validator.New(),
 	}
 }
@@ -43,7 +43,7 @@ func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	if err := transport.srv.Notify(notification); err != nil {
+	if err := transport.bot.Notify(notification.Text); err != nil {
 		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid notify: %s", err), "Неудалось отправить оповещения")
 		return
 	}
