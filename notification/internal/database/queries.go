@@ -3,9 +3,9 @@ package database
 import (
 	"fmt"
 
+	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	"github.com/jmoiron/sqlx"
-	"github.com/sirupsen/logrus"
 )
 
 func (pg *Postgres) GetSubscribers() ([]models.Subscriber, error) {
@@ -44,7 +44,6 @@ INSERT INTO main.subscribers (
 	return affected == 0, nil
 }
 
-func (pg *Postgres) PushNotification(tx *sqlx.Tx, notification string) error {
-	logrus.Info(notification)
+func (pg *Postgres) PushNotification(tx *sqlx.Tx, notification autogen.Notification) error {
 	return nil
 }

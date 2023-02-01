@@ -3,6 +3,7 @@ package telegram
 import (
 	"fmt"
 
+	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -31,7 +32,7 @@ func NewBot(cfg database.PostgresConfig, token string, pass string) *Bot {
 	return bot
 }
 
-func (bot *Bot) Notify(notification string) error {
+func (bot *Bot) Notify(notification autogen.Notification) error {
 	tx, err := bot.db.GetTX()
 	if err != nil {
 		return fmt.Errorf("Invalid transaction: %s", err)
@@ -45,7 +46,17 @@ func (bot *Bot) Notify(notification string) error {
 		return fmt.Errorf("Invalid db push notification: %s", err)
 	}
 
-	if err := bot.send(notification); err != nil {
+	description := ""
+	if notification.Description != nil {
+		description = *notification.Description
+	}
+	msg := fmt.Sprintf(
+		"%s %s %s",
+		notification.Name,
+		notification.Phone,
+		description,
+	)
+	if err := bot.send(msg); err != nil {
 		if txErr := tx.Rollback(); txErr != nil {
 			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
 		}

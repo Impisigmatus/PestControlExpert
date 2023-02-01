@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/telegram"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/utils"
 	"github.com/go-playground/validator/v10"
@@ -32,7 +31,7 @@ func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	var notification models.Notification
+	var notification autogen.Notification
 	if err := jsoniter.Unmarshal(data, &notification); err != nil {
 		utils.WriteString(w, http.StatusBadRequest, fmt.Errorf("Invalid parse body: %s", err), "Невалидное удалось распарсить тело запроса формата JSON")
 		return
@@ -43,7 +42,7 @@ func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	if err := transport.bot.Notify(notification.Text); err != nil {
+	if err := transport.bot.Notify(notification); err != nil {
 		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid notify: %s", err), "Неудалось отправить оповещения")
 		return
 	}

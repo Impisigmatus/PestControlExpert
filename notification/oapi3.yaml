@@ -20,7 +20,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Message'
+              $ref: '#/components/schemas/Notification'
       responses:
         "204":
           description: Успешная отправка оповещения
@@ -31,14 +31,27 @@ paths:
 
 components:
   schemas:
-    Message:
+    Notification:
       type: object
       description: Оповещение
       required:
-        - data
+        - name
+        - phone
       properties:
-        data:
+        name:
           type: string
-          description: Текст оповещения
+          description: ФИО запрашивающего обратный звонок
           x-oapi-codegen-extra-tags:
+            db: name
             validate: required
+        phone:
+          type: string
+          description: ФИО запрашивающего обратный звонок
+          x-oapi-codegen-extra-tags:
+            db: phone
+            validate: required,e164
+        description:
+          type: string
+          description: Описание запроса
+          x-oapi-codegen-extra-tags:
+            db: description
