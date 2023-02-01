@@ -6,6 +6,7 @@ import (
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )
 
@@ -47,6 +48,10 @@ func (bot *Bot) Send(msg string) error {
 	return nil
 }
 
+func (bot *Bot) GetTX() (*sqlx.Tx, error) {
+	return bot.db.GetTX()
+}
+
 func (bot *Bot) consume() {
 	go func() {
 		updater := tg.NewUpdate(0)
@@ -62,7 +67,8 @@ func (bot *Bot) consume() {
 						Name:     update.Message.From.FirstName,
 					})
 					if err != nil {
-						logrus.Panicf("Invalid add subscriber: %s", err)
+						logrus.Errorf("Invalid add subscriber: %s", err)
+						continue
 					}
 
 					var text string
@@ -74,8 +80,10 @@ func (bot *Bot) consume() {
 
 					msg := tg.NewMessage(update.Message.Chat.ID, text)
 					msg.ReplyToMessageID = update.Message.MessageID
+
 					if _, err := bot.api.Send(msg); err != nil {
-						logrus.Panicf("Invalid send msg: %s", err)
+						logrus.Errorf("Invalid send msg: %s", err)
+						continue
 					}
 				}
 			}

@@ -14,13 +14,13 @@ import (
 )
 
 type Transport struct {
-	bot       *telegram.Bot
+	srv       *Service
 	validator *validator.Validate
 }
 
 func NewTransport(bot *telegram.Bot) autogen.ServerInterface {
 	return &Transport{
-		bot:       bot,
+		srv:       NewService(bot),
 		validator: validator.New(),
 	}
 }
@@ -28,23 +28,23 @@ func NewTransport(bot *telegram.Bot) autogen.ServerInterface {
 func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 	if err != nil {
-		utils.WriteString(w, http.StatusInternalServerError, fmt.Sprintf("Не удалось прочитать тело запроса: %s", err))
+		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid read body: %s", err), "Неудалось прочитать тело запроса")
 		return
 	}
 
 	var notification models.Notification
 	if err := jsoniter.Unmarshal(data, &notification); err != nil {
-		utils.WriteString(w, http.StatusBadRequest, fmt.Sprintf("Не распарсить тело запроса: %s", err))
+		utils.WriteString(w, http.StatusBadRequest, fmt.Errorf("Invalid parse body: %s", err), "Невалидное удалось распарсить тело запроса формата JSON")
 		return
 	}
 
 	if err := transport.validator.Struct(notification); err != nil {
-		utils.WriteString(w, http.StatusBadRequest, fmt.Sprintf("Не валидное тело запроса: %s", err))
+		utils.WriteString(w, http.StatusBadRequest, fmt.Errorf("Invalid body: %s", err), "Невалидное тело запроса")
 		return
 	}
 
-	if err := transport.bot.Send(notification.Text); err != nil {
-		utils.WriteString(w, http.StatusInternalServerError, fmt.Sprintf("Не удалось отправить оповещения: %s", err))
+	if err := transport.srv.Notify(notification); err != nil {
+		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid notify: %s", err), "Неудалось отправить оповещения")
 		return
 	}
 

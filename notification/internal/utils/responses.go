@@ -8,14 +8,18 @@ import (
 )
 
 func WriteNoContent(w http.ResponseWriter) {
-	WriteString(w, http.StatusNoContent, "")
+	WriteString(w, http.StatusNoContent, nil, "")
 }
 
-func WriteString(w http.ResponseWriter, status int, str string, args ...any) {
+func WriteString(w http.ResponseWriter, status int, err error, str string, args ...any) {
 	const (
 		header  = "Content-Type"
 		content = "text/plain"
 	)
+
+	if err != nil {
+		logrus.Error(err)
+	}
 
 	w.Header().Set(header, content)
 	w.WriteHeader(status)
