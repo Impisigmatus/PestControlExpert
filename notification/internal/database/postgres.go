@@ -1,6 +1,7 @@
 package database
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 
@@ -51,4 +52,8 @@ func newPostgres(cfg PostgresConfig) *sql.DB {
 	}
 
 	return db
+}
+
+func (pg *Postgres) GetTX() (*sqlx.Tx, error) {
+	return pg.db.BeginTxx(context.Background(), nil)
 }

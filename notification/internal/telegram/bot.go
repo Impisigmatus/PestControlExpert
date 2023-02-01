@@ -3,6 +3,7 @@ package telegram
 import (
 	"fmt"
 
+	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -31,7 +32,50 @@ func NewBot(cfg database.PostgresConfig, token string, pass string) *Bot {
 	return bot
 }
 
-func (bot *Bot) Send(msg string) error {
+func (bot *Bot) Notify(notification autogen.Notification) error {
+	tx, err := bot.db.GetTX()
+	if err != nil {
+		return fmt.Errorf("Invalid transaction: %s", err)
+	}
+
+	if err := bot.db.PushNotification(tx, notification); err != nil {
+		if txErr := tx.Rollback(); txErr != nil {
+			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
+		}
+
+		return fmt.Errorf("Invalid db push notification: %s", err)
+	}
+
+	description := ""
+	if notification.Description != nil {
+		description = *notification.Description
+	}
+	msg := fmt.Sprintf(
+		"%s %s %s",
+		notification.Name,
+		notification.Phone,
+		description,
+	)
+	if err := bot.send(msg); err != nil {
+		if txErr := tx.Rollback(); txErr != nil {
+			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
+		}
+
+		return fmt.Errorf("Invalid tg bot send notification: %s", err)
+	}
+
+	if err := tx.Commit(); err != nil {
+		if txErr := tx.Rollback(); txErr != nil {
+			err = fmt.Errorf("%s with invalid rollback: %s", err, txErr)
+		}
+
+		return fmt.Errorf("Invalid commit: %s", err)
+	}
+
+	return nil
+}
+
+func (bot *Bot) send(msg string) error {
 	subscribers, err := bot.db.GetSubscribers()
 	if err != nil {
 		return fmt.Errorf("Invalid subscribers: %s", err)
@@ -62,7 +106,8 @@ func (bot *Bot) consume() {
 						Name:     update.Message.From.FirstName,
 					})
 					if err != nil {
-						logrus.Panicf("Invalid add subscriber: %s", err)
+						logrus.Errorf("Invalid add subscriber: %s", err)
+						continue
 					}
 
 					var text string
@@ -75,7 +120,8 @@ func (bot *Bot) consume() {
 					msg := tg.NewMessage(update.Message.Chat.ID, text)
 					msg.ReplyToMessageID = update.Message.MessageID
 					if _, err := bot.api.Send(msg); err != nil {
-						logrus.Panicf("Invalid send msg: %s", err)
+						logrus.Errorf("Invalid send msg: %s", err)
+						continue
 					}
 				}
 			}

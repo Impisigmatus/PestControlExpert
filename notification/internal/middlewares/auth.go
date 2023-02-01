@@ -28,12 +28,12 @@ func (auth *authorization) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	authorization := r.Header.Get(header)
 	if !strings.HasPrefix(authorization, "Basic") {
-		utils.WriteString(w, http.StatusUnauthorized, "Unauthorized: Invalid type")
+		utils.WriteString(w, http.StatusUnauthorized, fmt.Errorf("Invalid type"), "Неверный тип авторизации")
 		return
 	}
 
 	if err := auth.basic(w, authorization); err != nil {
-		utils.WriteString(w, http.StatusUnauthorized, "Unauthorized: %s", err)
+		utils.WriteString(w, http.StatusUnauthorized, err, "Неверные логин или пароль")
 		return
 	}
 
@@ -45,7 +45,7 @@ func (auth *authorization) basic(w http.ResponseWriter, header string) error {
 	authorization := header[len(prefix):]
 	data, err := base64.StdEncoding.DecodeString(authorization)
 	if err != nil {
-		return fmt.Errorf("Invalid basic authorization: %s", err)
+		return fmt.Errorf("Invalid decode basic authorization: %s", err)
 	}
 	decoded := string(data)
 

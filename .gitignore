@@ -8,6 +8,7 @@ www/dist
 *\.log
 **/autogen**
 mem.db.json
+__debug_bin
 
 # local env files
 .env.local
