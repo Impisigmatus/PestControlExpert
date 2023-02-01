@@ -51,7 +51,7 @@ func (bot *Bot) Notify(notification autogen.Notification) error {
 		description = *notification.Description
 	}
 	msg := fmt.Sprintf(
-		"%s %s %s",
+		"ФИО: %s\nТелефон: %s\nКоментарий: %s",
 		notification.Name,
 		notification.Phone,
 		description,
