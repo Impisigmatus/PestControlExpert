@@ -45,5 +45,22 @@ INSERT INTO main.subscribers (
 }
 
 func (pg *Postgres) PushNotification(tx *sqlx.Tx, notification autogen.Notification) error {
+	const query = `
+INSERT INTO main.callbacks (
+	date,
+	name,
+	phone,
+	description
+) VALUES (
+	NOW(),
+	:name,
+	:phone,
+	:description
+);`
+
+	if _, err := pg.db.NamedExec(query, notification); err != nil {
+		return fmt.Errorf("Invalid INSERT main.callbacks: %s", err)
+	}
+
 	return nil
 }

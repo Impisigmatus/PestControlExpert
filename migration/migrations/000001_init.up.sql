@@ -7,10 +7,10 @@ CREATE TABLE IF NOT EXISTS main.subscribers (
 );
 
 CREATE TABLE IF NOT EXISTS main.callbacks (
-    date                DATE NOT NULL,
-    name                TEXT NOT NULL,
-    phone VARCHAR(10)   NOT NULL,
-    description         TEXT
+    date        DATE NOT NULL,
+    name        TEXT NOT NULL,
+    phone       TEXT NOT NULL,
+    description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS main.price (
