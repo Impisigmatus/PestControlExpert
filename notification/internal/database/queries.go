@@ -26,7 +26,7 @@ INSERT INTO main.subscribers (
 	username,
 	name
 ) VALUES (
-	:chat_id,
+	:chat_id::bigint,
 	:username,
 	:name
 ) ON CONFLICT (chat_id) DO NOTHING;`
