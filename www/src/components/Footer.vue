@@ -114,8 +114,8 @@ a {
   display: flex;
 }
 .footer__logo_img {
-  width: 70px;
-  height: 60px;
+  width: 128px;
+  height: 128px;
 }
 .footer__adr {
   display: flex;

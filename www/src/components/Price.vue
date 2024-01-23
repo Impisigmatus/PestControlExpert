@@ -9,7 +9,7 @@
         <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>701 р.</li>
+            <li>750 р.</li>
             <li>1500 р. (Премиум)</li>
           </ul>
         </div>
@@ -19,7 +19,7 @@
         <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>1600 р.</li>
+            <li>1850 р.</li>
             <li>3000 р. (Премиум)</li>
           </ul>
         </div>
@@ -29,8 +29,8 @@
         <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>1850 р.</li>
-            <li>3700 р. (Премиум)</li>
+            <li>2300 р.</li>
+            <li>3900 р. (Премиум)</li>
           </ul>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>6500 р.</li>
+            <li>4800 р.</li>
             <li>9900 р. (Премиум)</li>
           </ul>
         </div>
@@ -49,7 +49,7 @@
         <div class="price__count"></div>
         <div class="price__descr">
           <ul>
-            <li>4500 р.</li>
+            <li>4000 р.</li>
             <li>8000 р. (Премиум)</li>
           </ul>
         </div>
