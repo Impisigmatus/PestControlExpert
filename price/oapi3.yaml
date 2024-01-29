@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: PestControlExpert Price API
+  description: |
+    %README.md%
+
+tags:
+  - name: get
+    x-displayName: Получение
+
+paths:
+  "/api/prices":
+    get:
+      tags:
+        - get
+      summary: Получение актуального прайса с базы данных
+      responses:
+        "200":
+          description: Актуальные цены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        "204":
+          description: Записей нет
+        "401":
+          description: Ошибка авторизации
+        "500":
+          description: Внутренняя ошибка сервиса
+
+components:
+  schemas:
+    Price:
+      type: object
+      description: Актуальный прайс
+      required:
+        - name
+        - description
+        - standart
+        - premium
+      properties:
+        name:
+          type: string
+          description: Название товара/услуги
+          x-oapi-codegen-extra-tags:
+            db: name
+            validate: required
+        description:
+          type: string
+          description: Описание товара/услуги
+          x-oapi-codegen-extra-tags:
+            db: description
+            validate: required
+        standart:
+          type: number
+          format: float
+          minimum: 0
+          description: Стандартная цена товара/услуги
+          x-oapi-codegen-extra-tags:
+            db: standart
+            validate: required
+        premium:
+          type: number
+          format: float
+          minimum: 0
+          description: Премиум цена товара/услуги
+          x-oapi-codegen-extra-tags:
+            db: premium
+            validate: required

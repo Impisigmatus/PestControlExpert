@@ -27,13 +27,13 @@ func NewTransport(bot *telegram.Bot) autogen.ServerInterface {
 func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 	if err != nil {
-		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid read body: %s", err), "Неудалось прочитать тело запроса")
+		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid read body: %s", err), "Не удалось прочитать тело запроса")
 		return
 	}
 
 	var notification autogen.Notification
 	if err := jsoniter.Unmarshal(data, &notification); err != nil {
-		utils.WriteString(w, http.StatusBadRequest, fmt.Errorf("Invalid parse body: %s", err), "Невалидное удалось распарсить тело запроса формата JSON")
+		utils.WriteString(w, http.StatusBadRequest, fmt.Errorf("Invalid parse body: %s", err), "Не удалось распарсить тело запроса формата JSON")
 		return
 	}
 
@@ -47,7 +47,7 @@ func (transport *Transport) PostApiNotify(w http.ResponseWriter, r *http.Request
 	}
 
 	if err := transport.bot.Notify(notification); err != nil {
-		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid notify: %s", err), "Неудалось отправить оповещения")
+		utils.WriteString(w, http.StatusInternalServerError, fmt.Errorf("Invalid notify: %s", err), "Не удалось отправить оповещения")
 		return
 	}
 
