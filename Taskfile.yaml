@@ -9,6 +9,8 @@ includes:
     taskfile: www/Taskfile.www.yaml
   notification:
     taskfile: notification/Taskfile.notification.yaml
+  price:
+    taskfile: price/Taskfile.price.yaml
 
 tasks:
   default:
