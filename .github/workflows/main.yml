@@ -26,6 +26,9 @@ jobs:
             StrictHostKeyChecking no
           END
 
+      - name: Cat
+        run: cat ~/.ssh/config
+
       - name: Pull
         run: ssh pce 'cd src/PestControlExpert && git pull origin master'
 
