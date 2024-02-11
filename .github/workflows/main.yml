@@ -30,6 +30,7 @@ jobs:
             IdentityFile ~/.ssh/id_ed25519_impisigmatus
             StrictHostKeyChecking no
           END
+          ssh pce 'cd src/PestControlExpert && git pull origin master'
 
       - name: Pull
         run: ssh pce 'cd src/PestControlExpert && git pull origin master'
