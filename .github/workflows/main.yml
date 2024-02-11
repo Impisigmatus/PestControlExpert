@@ -25,9 +25,8 @@ jobs:
             IdentityFile ~/.ssh/id_ed25519_impisigmatus
             StrictHostKeyChecking no
           END
-
-      - name: Cat
-        run: cat ~/.ssh/config
+          echo $SSH_HOSTNAME
+          echo $SSH_USERNAME
 
       - name: Pull
         run: ssh pce 'cd src/PestControlExpert && git pull origin master'
