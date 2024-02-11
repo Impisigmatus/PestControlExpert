@@ -17,6 +17,7 @@ jobs:
         run: |
           echo $SSH_HOSTNAME
           echo $SSH_USERNAME
+          echo $SSH_KEY
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/id_ed25519_impisigmatus
           chmod 600 ~/.ssh/id_ed25519_impisigmatus
