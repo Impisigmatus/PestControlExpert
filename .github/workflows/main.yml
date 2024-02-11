@@ -11,17 +11,17 @@ jobs:
     steps:
       - name: Configure SSH
         env:
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOSTNAME: ${{ secrets.SSH_HOSTNAME }}
+          SSH_USERNAME: ${{ inputs.SSH_USERNAME }}
+          SSH_KEY: ${{ inputs.SSH_PRIVATE_KEY }}
+          SSH_HOSTNAME: ${{ inputs.SSH_HOSTNAME }}
         run: |
           echo $SSH_HOSTNAME
           echo $SSH_USERNAME
           echo $SSH_KEY
+
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/id_ed25519_impisigmatus
           chmod 600 ~/.ssh/id_ed25519_impisigmatus
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519_impisigmatus $SSH_USERNAME@$SSH_HOSTNAME 'cat "IT WORKS"'
           cat > ~/.ssh/config << END
           Host pce
             HostName $SSH_HOSTNAME
