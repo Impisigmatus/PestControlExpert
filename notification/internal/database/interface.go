@@ -6,6 +6,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+//go:generate mockgen -source=interface.go -package mocks -destination ../../autogen/mocks/database.go
 type Database interface {
 	GetSubscribers() ([]models.Subscriber, error)
 	AddSubscriber(subscriber models.Subscriber) (bool, error)

@@ -1,7 +1,7 @@
 # Builder
 FROM golang:1.22-alpine AS builder
-ADD . /src/notification
-WORKDIR /src/notification
+ADD . /src/price
+WORKDIR /src/price
 RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest && \
     mkdir -p autogen && \
     sed -e 's/^/    /' README.md > autogen/README.md && \
@@ -9,12 +9,12 @@ RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-co
     oapi-codegen -o autogen/server.go -old-config-style -package autogen -generate chi-server autogen/oapi3.yaml && \
     oapi-codegen -o autogen/types.go  -old-config-style -package autogen -generate types      autogen/oapi3.yaml && \
     oapi-codegen -o autogen/client.go -old-config-style -package autogen -generate client     autogen/oapi3.yaml
-RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
+RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/price .
 
 # Service
 FROM alpine:latest
 EXPOSE 8000
 RUN chmod 777 /opt
-COPY --from=builder /build/notification /usr/bin
+COPY --from=builder /build/price /usr/bin
 USER nobody
-ENTRYPOINT ["/usr/bin/notification"]
+ENTRYPOINT ["/usr/bin/price"]

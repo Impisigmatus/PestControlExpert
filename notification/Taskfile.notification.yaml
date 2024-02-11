@@ -10,6 +10,19 @@ tasks:
     deps:
       - update
 
+  # gofmt:
+  #   desc: gofmt
+  #   cmds: test -z $(gofmt -l ./internal)
+
+  # test:
+  #   desc: test
+  #   cmds: go test {{.GO_TAGS}} -count=1 ./...
+
+  mock-gen:
+    desc: mock-gen
+    cmds:
+      - cd notifiaction && go generate .
+
   update:
     desc: Автогенерация OpenAPI 3 и обновление зависимостей
     cmds:
@@ -53,5 +66,6 @@ tasks:
 
   dependencies:
     cmds:
+      - '[ -x "$(command -v mockgen)" ] || go install github.com/golang/mock/mockgen@latest'
       - '[ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest'
       - '[ -x "$(command -v redoc-cli)" ] || npm i -g --prefix=/opt/npm redoc-cli'

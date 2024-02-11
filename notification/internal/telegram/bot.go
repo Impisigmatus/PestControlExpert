@@ -10,21 +10,30 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+//go:generate mockgen -source=bot.go -package mocks -destination ../../autogen/mocks/telegram.go
+type ITelegramAPI interface {
+	Notify(notification autogen.Notification) error
+}
+
 type Bot struct {
 	api  *tg.BotAPI
 	db   database.Database
 	pass string
 }
 
-func NewBot(cfg database.PostgresConfig, token string, pass string) *Bot {
-	api, err := tg.NewBotAPI(token)
-	if err != nil {
-		logrus.Panicf("Invalid telegram bot: %s", err)
-	}
+// func NewBot(cfg database.PostgresConfig, token string, pass string) ITelegramAPI {
+// 	api, err := tg.NewBotAPI(token)
+// 	if err != nil {
+// 		logrus.Panicf("Invalid telegram bot: %s", err)
+// 	}
 
+// 	return newBot(api, database.NewPostgres(cfg), pass)
+// }
+
+func NewBot(api *tg.BotAPI, db database.Database, pass string) ITelegramAPI {
 	bot := &Bot{
 		api:  api,
-		db:   database.NewPostgres(cfg),
+		db:   db,
 		pass: pass,
 	}
 

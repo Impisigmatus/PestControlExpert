@@ -4,7 +4,6 @@ www/dist
 **/vendor**
 **/portainer-data**
 **/postgres-data**
-*\.env
 *\.log
 **/autogen**
 mem.db.json
