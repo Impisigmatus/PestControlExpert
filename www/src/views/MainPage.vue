@@ -137,7 +137,7 @@
               />
               <span>
                 Я согласен(а) с
-                <a href="/privacy.html">
+                <a target="/privacy" href="/privacy.html">
                   политикой конфидициальности
                 </a>
               </span>
