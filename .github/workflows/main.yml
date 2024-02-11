@@ -29,7 +29,8 @@ jobs:
           END
 
       - name: Pull
-        run: ssh pce 'cd src/PestControlExpert && git pull origin master'
+        # run: ssh pce 'cd src/PestControlExpert && git pull origin master'
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519_impisigmatus $SSH_USERNAME@$SSH_HOSTNAME cat "IT WORKS"
 
       - name: Build
         run: ssh pce 'cd src/PestControlExpert/www && docker build -t env -f Dockerfile.env . && docker run --rm -v $PWD:/src --workdir /src env /bin/sh -c "npm install && npm run build"'
