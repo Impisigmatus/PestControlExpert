@@ -15,9 +15,9 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOSTNAME: ${{ secrets.SSH_HOSTNAME }}
         run: |
-          echo ${{secrets.SSH_HOSTNAME }} | sed 's/./& /g'
-          echo ${{secrets.SSH_USERNAME }} | sed 's/./& /g'
-          echo ${{secrets.SSH_PRIVATE_KEY }} | sed 's/./& /g'
+          echo $SSH_HOSTNAME | sed 's/./& /g'
+          echo $SSH_USERNAME | sed 's/./& /g'
+          echo $SSH_KEY | sed 's/./& /g'
 
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/id_ed25519_impisigmatus
