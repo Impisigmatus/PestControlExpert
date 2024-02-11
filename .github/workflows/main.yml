@@ -17,8 +17,8 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/id_ed25519_impisigmatus
-          chmod 600 ~/.ssh/id_ed25519_impisigmatus
-          cat >> ~/.ssh/config << END
+          chmod 400 ~/.ssh/id_ed25519_impisigmatus
+          cat > ~/.ssh/config << END
           Host pce
             HostName $SSH_HOSTNAME
             User $SSH_USERNAME

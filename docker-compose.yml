@@ -5,17 +5,30 @@ services:
     container_name: nginx
     restart: always
     volumes:
+      - ./ssl_private/certs:/etc/ssl/certs:ro
+      - ./ssl_private/private:/etc/ssl/private:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./www/dist:/var/www/pestcontrolexpert.ru
       - ./nginx:/var/log/nginx/
+
     ports:
+      - 443:443
       - 80:80
+      - 8000:8000
+      - 9000:9000
     environment:
      - NGINX_HOST=pestcontrolexpert.ru
      - NGINX_PORT=80
     links:
       - portainer
       - notification
+      # - price
+      - pgadmin4
+    depends_on:
+      - portainer
+      - notification
+      # - price
+      - pgadmin4
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -27,8 +40,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./portainer-data:/data
-    ports:
-      - 9000:9000
 
   database:
     image: postgres:alpine
@@ -45,8 +56,6 @@ services:
   pgadmin4:
     image: dpage/pgadmin4
     restart: always
-    ports:
-      - 8000:80
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
@@ -64,10 +73,23 @@ services:
       - POSTGRES_DATABASE=pestcontrolexpert
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - PGADMIN_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_PASSWORD=${PGADMIN_PASSWORD}
       - TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
       - SUBSCRIBE_PASSWORD=${SUBSCRIBE_PASSWORD}
       - APIS_AUTH_BASIC=${APIS_AUTH_BASIC}
     depends_on:
       - database
+
+  # price:
+  #   build: price/
+  #   container_name: api_Price
+  #   restart: always
+  #   environment:
+  #     - ADDRESS=:8000
+  #     - POSTGRES_HOSTNAME=database
+  #     - POSTGRES_PORT=5432
+  #     - POSTGRES_DATABASE=pestcontrolexpert
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - APIS_AUTH_BASIC=${APIS_AUTH_BASIC}
+  #   depends_on:
+  #     - database
