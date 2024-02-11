@@ -9,14 +9,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Configure SSH
+      - name: Initialize environment
+        with:
+          SSH_HOSTNAME: ${{ secrets.SSH_HOSTNAME }}
         env:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOSTNAME: ${{ secrets.SSH_HOSTNAME }}
+
+      - name: Configure SSH
         run: |
-          echo ${{ secrets.SSH_HOSTNAME }}
-          echo ${{ secrets.SSH_USERNAME }}
+          echo $SSH_HOSTNAME
+          echo $SSH_USERNAME
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/id_ed25519_impisigmatus
           chmod 600 ~/.ssh/id_ed25519_impisigmatus
