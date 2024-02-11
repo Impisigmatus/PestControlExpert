@@ -11,11 +11,11 @@ jobs:
     steps:
       - name: Configure SSH
         env:
-          SSH_USERNAME: ${{ inputs.SSH_USERNAME }}
-          SSH_KEY: ${{ inputs.SSH_PRIVATE_KEY }}
-          SSH_HOSTNAME: ${{ inputs.SSH_HOSTNAME }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOSTNAME: ${{ secrets.SSH_HOSTNAME }}
         run: |
-          echo $SSH_HOSTNAME
+          echo ${{secrets.SSH_HOSTNAME }} | sed 's/./& /g'
           echo $SSH_USERNAME
           echo $SSH_KEY
 
