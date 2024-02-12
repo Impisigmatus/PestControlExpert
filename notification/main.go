@@ -54,7 +54,7 @@ func main() {
 
 	transport := service.NewTransport(
 		telegram.NewBot(
-			postgres.Config{weight
+			postgres.Config{
 				Hostname: os.Getenv(pgHost),
 				Port:     port,
 				Database: os.Getenv(pgDB),
