@@ -22,7 +22,6 @@ func Test_TelegramBot(t *testing.T) {
 	bot := newBot(db, api, "test")
 
 	t.Run("Notify()", func(t *testing.T) {
-		sample_error := fmt.Errorf("some error")
 		sample_tx := &sqlx.Tx{Tx: &sql.Tx{}}
 		sample_notification := autogen.Notification{
 			Phone:       "+79991234567",
@@ -47,63 +46,69 @@ func Test_TelegramBot(t *testing.T) {
 			},
 		}
 
-		t.Run("With subscribers", func(t *testing.T) {
-			db.EXPECT().GetTX().Return(sample_tx, nil)
-			db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
-			db.EXPECT().GetSubscribers().Return(sample_subscribers, nil)
-			db.EXPECT().CommitTX(sample_tx).Return(nil)
+		t.Run("SuccessTestCases", func(t *testing.T) {
+			t.Run("with subscribers", func(t *testing.T) {
+				db.EXPECT().GetTX().Return(sample_tx, nil)
+				db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
+				db.EXPECT().GetSubscribers().Return(sample_subscribers, nil)
+				db.EXPECT().CommitTX(sample_tx).Return(nil)
 
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
 
-			if err := bot.Notify(sample_notification); err != nil {
-				t.Fatalf("Invalid Notify(): %s", err)
-			}
+				if err := bot.Notify(sample_notification); err != nil {
+					t.Fatalf("Invalid Notify(): %s", err)
+				}
+			})
+			t.Run("without subscribers", func(t *testing.T) {
+				db.EXPECT().GetTX().Return(sample_tx, nil)
+				db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
+				db.EXPECT().GetSubscribers().Return([]models.Subscriber{}, nil)
+				db.EXPECT().CommitTX(sample_tx).Return(nil)
+
+				if err := bot.Notify(sample_notification); err != nil {
+					t.Fatalf("Invalid Notify(): %s", err)
+				}
+			})
 		})
-		t.Run("Without subscribers", func(t *testing.T) {
-			db.EXPECT().GetTX().Return(sample_tx, nil)
-			db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
-			db.EXPECT().GetSubscribers().Return([]models.Subscriber{}, nil)
-			db.EXPECT().CommitTX(sample_tx).Return(nil)
 
-			if err := bot.Notify(sample_notification); err != nil {
-				t.Fatalf("Invalid Notify(): %s", err)
-			}
-		})
-		t.Run("Invalid push db", func(t *testing.T) {
-			db.EXPECT().GetTX().Return(sample_tx, nil)
-			db.EXPECT().PushNotification(sample_tx, sample_notification).Return(sample_error)
-			db.EXPECT().RollbackTX(sample_tx).Return(nil)
+		t.Run("FailTestCases", func(t *testing.T) {
+			sample_error := fmt.Errorf("some error")
+			t.Run("invalid push db", func(t *testing.T) {
+				db.EXPECT().GetTX().Return(sample_tx, nil)
+				db.EXPECT().PushNotification(sample_tx, sample_notification).Return(sample_error)
+				db.EXPECT().RollbackTX(sample_tx).Return(nil)
 
-			if err := bot.Notify(sample_notification); err == nil {
-				t.Fatalf("Invalid Notify(): error does not exists")
-			}
-		})
-		t.Run("Invalid send tg api", func(t *testing.T) {
-			db.EXPECT().GetTX().Return(sample_tx, nil)
-			db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
-			db.EXPECT().GetSubscribers().Return(nil, sample_error)
-			db.EXPECT().RollbackTX(sample_tx).Return(nil)
+				if err := bot.Notify(sample_notification); err == nil {
+					t.Fatalf("Invalid Notify(): error does not exists")
+				}
+			})
+			t.Run("invalid send tg api", func(t *testing.T) {
+				db.EXPECT().GetTX().Return(sample_tx, nil)
+				db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
+				db.EXPECT().GetSubscribers().Return(nil, sample_error)
+				db.EXPECT().RollbackTX(sample_tx).Return(nil)
 
-			if err := bot.Notify(sample_notification); err == nil {
-				t.Fatalf("Invalid Notify(): error does not exists")
-			}
-		})
-		t.Run("Invalid commit", func(t *testing.T) {
-			db.EXPECT().GetTX().Return(sample_tx, nil)
-			db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
-			db.EXPECT().GetSubscribers().Return(sample_subscribers, nil)
-			db.EXPECT().CommitTX(sample_tx).Return(sample_error)
-			db.EXPECT().RollbackTX(sample_tx).Return(nil)
+				if err := bot.Notify(sample_notification); err == nil {
+					t.Fatalf("Invalid Notify(): error does not exists")
+				}
+			})
+			t.Run("invalid commit", func(t *testing.T) {
+				db.EXPECT().GetTX().Return(sample_tx, nil)
+				db.EXPECT().PushNotification(sample_tx, sample_notification).Return(nil)
+				db.EXPECT().GetSubscribers().Return(sample_subscribers, nil)
+				db.EXPECT().CommitTX(sample_tx).Return(sample_error)
+				db.EXPECT().RollbackTX(sample_tx).Return(nil)
 
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
 
-			if err := bot.Notify(sample_notification); err == nil {
-				t.Fatalf("Invalid Notify(): error does not exists")
-			}
+				if err := bot.Notify(sample_notification); err == nil {
+					t.Fatalf("Invalid Notify(): error does not exists")
+				}
+			})
 		})
 	})
 
@@ -122,18 +127,33 @@ func Test_TelegramBot(t *testing.T) {
 			Username: sample_update.Message.From.UserName,
 			Name:     sample_update.Message.From.FirstName,
 		}
-		t.Run("New subscriber", func(t *testing.T) {
-			db.EXPECT().AddSubscriber(sample_subscriber).Return(false, nil)
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
-			bot.handle(sample_update)
+
+		t.Run("SuccessTestCases", func(t *testing.T) {
+			t.Run("new subscriber", func(t *testing.T) {
+				db.EXPECT().AddSubscriber(sample_subscriber).Return(false, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				bot.handle(sample_update)
+			})
+			t.Run("exists subscriber", func(t *testing.T) {
+				db.EXPECT().AddSubscriber(sample_subscriber).Return(true, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
+				bot.handle(sample_update)
+			})
+			t.Run("empty update", func(t *testing.T) {
+				bot.handle(tg.Update{})
+			})
 		})
-		t.Run("Exists subscriber", func(t *testing.T) {
-			db.EXPECT().AddSubscriber(sample_subscriber).Return(true, nil)
-			api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, nil)
-			bot.handle(sample_update)
-		})
-		t.Run("Empty update", func(t *testing.T) {
-			bot.handle(tg.Update{})
+		t.Run("FailTestCases", func(t *testing.T) {
+			sample_error := fmt.Errorf("some error")
+			t.Run("invalid add subscriber", func(t *testing.T) {
+				db.EXPECT().AddSubscriber(sample_subscriber).Return(false, sample_error)
+				bot.handle(sample_update)
+			})
+			t.Run("invalid send tg api", func(t *testing.T) {
+				db.EXPECT().AddSubscriber(sample_subscriber).Return(false, nil)
+				api.EXPECT().Send(gomock.Any()).Return(tg.Message{}, sample_error)
+				bot.handle(sample_update)
+			})
 		})
 	})
 }
