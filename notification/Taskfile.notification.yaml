@@ -10,18 +10,15 @@ tasks:
     deps:
       - update
 
-  # gofmt:
-  #   desc: gofmt
-  #   cmds: test -z $(gofmt -l ./internal)
-
-  # test:
-  #   desc: test
-  #   cmds: go test {{.GO_TAGS}} -count=1 ./...
-
-  mock-gen:
-    desc: mock-gen
+  format:
+    desc: Форматирование gofmt
     cmds:
-      - cd notifiaction && go generate .
+      - cd notification/ && test -z $(gofmt -l ./internal)
+
+  test:
+    desc: Запуск тестов
+    cmds:
+      - cd notification/ && go test {{.GO_TAGS}} -count=1 ./...
 
   update:
     desc: Автогенерация OpenAPI 3 и обновление зависимостей
@@ -30,6 +27,13 @@ tasks:
       - cd notification/ && go mod vendor
     deps:
       - oapi3-code-gen
+
+  # mock-gen:
+  #   desc: Генерация mock файлов
+  #   cmds:
+  #     - cd notifiaction && go generate .
+  #   deps:
+  #     - dependencies
 
   oapi3-code-gen:
     desc: Автогенерация интерфейсов OpenAPI 3

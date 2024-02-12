@@ -23,7 +23,7 @@ type IDatabase interface {
 	RollbackTX(tx *sqlx.Tx) error
 }
 
-type PostgresConfig struct {
+type Config struct {
 	Hostname string
 	Port     uint64
 	Database string
@@ -37,11 +37,11 @@ type Postgres struct {
 
 const driver = "pgx"
 
-func NewPostgres(cfg PostgresConfig) IDatabase {
+func NewPostgres(cfg Config) IDatabase {
 	return &Postgres{db: sqlx.NewDb(newPostgres(cfg), driver)}
 }
 
-func newPostgres(cfg PostgresConfig) *sql.DB {
+func newPostgres(cfg Config) *sql.DB {
 	pattern := fmt.Sprintf(
 		"host=%s port=%d database=%s user=%s password=%s sslmode=disable",
 		cfg.Hostname, cfg.Port, cfg.Database, cfg.User, cfg.Password,
