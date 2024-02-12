@@ -18,7 +18,7 @@ tasks:
   test:
     desc: Запуск тестов
     cmds:
-      - cd notification/ && go test {{.GO_TAGS}} -count=1 ./...
+      - cd notification/ && go test -count=1 ./...
 
   update:
     desc: Автогенерация OpenAPI 3 и обновление зависимостей
@@ -26,7 +26,9 @@ tasks:
       - cd notification/ && go mod tidy
       - cd notification/ && go mod vendor
     deps:
+      # - mock-gen
       - oapi3-code-gen
+      - oapi3-doc-gen
 
   # mock-gen:
   #   desc: Генерация mock файлов
