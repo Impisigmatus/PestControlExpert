@@ -10,13 +10,32 @@ tasks:
     deps:
       - update
 
+  format:
+    desc: Форматирование gofmt
+    cmds:
+      - cd price/ && test -z $(gofmt -l ./internal)
+
+  test:
+    desc: Запуск тестов
+    cmds:
+      - cd price/ && go test -count=1 ./...
+
   update:
     desc: Автогенерация OpenAPI 3 и обновление зависимостей
     cmds:
       - cd price/ && go mod tidy
       - cd price/ && go mod vendor
     deps:
+      - mock-gen
       - oapi3-code-gen
+      - oapi3-doc-gen
+
+  mock-gen:
+    desc: Генерация mock файлов
+    cmds:
+      - cd notification && go generate ./...
+    deps:
+      - dependencies
 
   oapi3-code-gen:
     desc: Автогенерация интерфейсов OpenAPI 3

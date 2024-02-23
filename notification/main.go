@@ -13,8 +13,8 @@ import (
 	"syscall"
 
 	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/database"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/middlewares"
+	"github.com/Impisigmatus/PestControlExpert/notification/internal/postgres"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/service"
 	"github.com/Impisigmatus/PestControlExpert/notification/internal/telegram"
 	"github.com/sirupsen/logrus"
@@ -54,7 +54,7 @@ func main() {
 
 	transport := service.NewTransport(
 		telegram.NewBot(
-			database.PostgresConfig{
+			postgres.Config{
 				Hostname: os.Getenv(pgHost),
 				Port:     port,
 				Database: os.Getenv(pgDB),

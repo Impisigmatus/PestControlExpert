@@ -1,6 +1,6 @@
 module github.com/Impisigmatus/PestControlExpert/price
 
-go 1.21.0
+go 1.22.0
 
 require (
 	github.com/go-chi/chi/v5 v5.0.11
@@ -20,8 +20,7 @@ require (
 	github.com/jackc/pgtype v1.14.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/stretchr/testify v1.8.2 // indirect
-	golang.org/x/crypto v0.7.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/crypto v0.6.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 )

@@ -1,17 +1,29 @@
-package database
+package postgres
 
 import (
 	"context"
 	"database/sql"
 	"fmt"
 
+	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )
 
-type PostgresConfig struct {
+//go:generate mockgen -source=postgres.go -package mocks -destination ../../autogen/mocks/postgres.go
+type IDatabase interface {
+	GetSubscribers() ([]models.Subscriber, error)
+	AddSubscriber(subscriber models.Subscriber) (bool, error)
+	PushNotification(tx *sqlx.Tx, notification autogen.Notification) error
+	GetTX() (*sqlx.Tx, error)
+	CommitTX(tx *sqlx.Tx) error
+	RollbackTX(tx *sqlx.Tx) error
+}
+
+type Config struct {
 	Hostname string
 	Port     uint64
 	Database string
@@ -25,11 +37,11 @@ type Postgres struct {
 
 const driver = "pgx"
 
-func NewPostgres(cfg PostgresConfig) Database {
+func NewPostgres(cfg Config) IDatabase {
 	return &Postgres{db: sqlx.NewDb(newPostgres(cfg), driver)}
 }
 
-func newPostgres(cfg PostgresConfig) *sql.DB {
+func newPostgres(cfg Config) *sql.DB {
 	pattern := fmt.Sprintf(
 		"host=%s port=%d database=%s user=%s password=%s sslmode=disable",
 		cfg.Hostname, cfg.Port, cfg.Database, cfg.User, cfg.Password,
@@ -56,4 +68,12 @@ func newPostgres(cfg PostgresConfig) *sql.DB {
 
 func (pg *Postgres) GetTX() (*sqlx.Tx, error) {
 	return pg.db.BeginTxx(context.Background(), nil)
+}
+
+func (pg *Postgres) CommitTX(tx *sqlx.Tx) error {
+	return tx.Commit()
+}
+
+func (pg *Postgres) RollbackTX(tx *sqlx.Tx) error {
+	return tx.Rollback()
 }
