@@ -27,7 +27,7 @@ services:
     depends_on:
       - portainer
       - notification
-       - price
+      - price
       - pgadmin4
 
   portainer:
