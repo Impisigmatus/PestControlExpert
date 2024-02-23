@@ -26,16 +26,16 @@ tasks:
       - cd notification/ && go mod tidy
       - cd notification/ && go mod vendor
     deps:
-      # - mock-gen
+      - mock-gen
       - oapi3-code-gen
       - oapi3-doc-gen
 
-  # mock-gen:
-  #   desc: Генерация mock файлов
-  #   cmds:
-  #     - cd notifiaction && go generate .
-  #   deps:
-  #     - dependencies
+  mock-gen:
+    desc: Генерация mock файлов
+    cmds:
+      - cd notification && go generate ./...
+    deps:
+      - dependencies
 
   oapi3-code-gen:
     desc: Автогенерация интерфейсов OpenAPI 3
