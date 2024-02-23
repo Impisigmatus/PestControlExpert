@@ -22,7 +22,7 @@ services:
     links:
       - portainer
       - notification
-       - price
+      - price
       - pgadmin4
     depends_on:
       - portainer
