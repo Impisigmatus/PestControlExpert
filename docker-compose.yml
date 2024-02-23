@@ -22,12 +22,12 @@ services:
     links:
       - portainer
       - notification
-      - price
+#      - price
       - pgadmin4
     depends_on:
       - portainer
       - notification
-      - price
+#      - price
       - pgadmin4
 
   portainer:
@@ -79,17 +79,17 @@ services:
     depends_on:
       - database
 
-  price:
-    build: price/
-    container_name: api_Price
-    restart: always
-    environment:
-      - ADDRESS=:8000
-      - POSTGRES_HOSTNAME=database
-      - POSTGRES_PORT=5432
-      - POSTGRES_DATABASE=pestcontrolexpert
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - APIS_AUTH_BASIC=${APIS_AUTH_BASIC}
-    depends_on:
-      - database
+#  price:
+#    build: price/
+#    container_name: api_Price
+#    restart: always
+#    environment:
+#      - ADDRESS=:8000
+#      - POSTGRES_HOSTNAME=database
+#      - POSTGRES_PORT=5432
+#      - POSTGRES_DATABASE=pestcontrolexpert
+#      - POSTGRES_USER=${POSTGRES_USER}
+#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#      - APIS_AUTH_BASIC=${APIS_AUTH_BASIC}
+#    depends_on:
+#      - database
