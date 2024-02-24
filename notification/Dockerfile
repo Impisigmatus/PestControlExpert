@@ -2,15 +2,10 @@
 FROM golang:1.22-alpine AS builder
 ADD . /src/notification
 WORKDIR /src/notification
-RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest && \
-    [ -x "$(command -v mockgen)" ] || go install github.com/golang/mock/mockgen@latest && \
-    mkdir -p autogen && \
-    sed -e 's/^/    /' README.md > autogen/README.md && \
-    sed -e '/    %README.md%/{' -e "r autogen/README.md" -e 'd' -e '}' oapi3.yaml > autogen/oapi3.yaml && \
-    oapi-codegen -o autogen/server.go -old-config-style -package autogen -generate chi-server autogen/oapi3.yaml && \
-    oapi-codegen -o autogen/types.go  -old-config-style -package autogen -generate types      autogen/oapi3.yaml && \
-    oapi-codegen -o autogen/client.go -old-config-style -package autogen -generate client     autogen/oapi3.yaml && \
-    go generate ./...
+RUN [ -x "$(command -v task)" ] || go install github.com/go-task/task/v3/cmd/task@latest && \
+    task notification:update && \
+    task notification:format && \
+    task notification:test
 RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
 
 # Service
