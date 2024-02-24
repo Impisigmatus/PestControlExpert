@@ -9,7 +9,6 @@ RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-co
     oapi-codegen -o autogen/server.go -old-config-style -package autogen -generate chi-server autogen/oapi3.yaml && \
     oapi-codegen -o autogen/types.go  -old-config-style -package autogen -generate types      autogen/oapi3.yaml && \
     oapi-codegen -o autogen/client.go -old-config-style -package autogen -generate client     autogen/oapi3.yaml
-RUN ls -R
 RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
 
 # Service

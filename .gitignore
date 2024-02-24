@@ -8,6 +8,7 @@ www/dist
 **/autogen**
 mem.db.json
 __debug_bin
+ssl_private/
 
 # local env files
 .env.local
