@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 
-	"github.com/Impisigmatus/PestControlExpert/price/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/prices/autogen"
 )
 
 func (pg *Postgres) GetPrices() ([]autogen.Price, error) {

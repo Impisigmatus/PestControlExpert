@@ -63,7 +63,7 @@ services:
       - database
 
   notification:
-    build: notification/
+    build: microservices/notification/
     container_name: api_Notification
     restart: always
     environment:
@@ -80,7 +80,7 @@ services:
       - database
 
   price:
-    build: price/
+    build: microservices/price/
     container_name: api_Price
     restart: always
     environment:

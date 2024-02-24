@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
-	"github.com/Impisigmatus/PestControlExpert/notification/autogen/mocks"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/autogen/mocks"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/models"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/golang/mock/gomock"
 	"github.com/jmoiron/sqlx"

@@ -3,8 +3,8 @@
 [Пользовательский интерфейс](www/README.md)
 
 Микросервисы:
-* [notification](notification/README.md)
-* [price](price/README.md)
+* [notification](microservices/notification/README.md)
+* [prices](microservices/prices/README.md)
 
 ## Окружение
 Для настройки окружения используется утилита `task`

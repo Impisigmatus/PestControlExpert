@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Impisigmatus/PestControlExpert/price/autogen"
-	"github.com/Impisigmatus/PestControlExpert/price/internal/database"
-	"github.com/Impisigmatus/PestControlExpert/price/internal/utils"
+	"github.com/Impisigmatus/PestControlExpert/microservices/prices/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/prices/internal/database"
+	"github.com/Impisigmatus/PestControlExpert/microservices/prices/internal/utils"
 )
 
 type Transport struct {

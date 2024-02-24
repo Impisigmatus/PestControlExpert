@@ -5,9 +5,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/telegram"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/utils"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/telegram"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/utils"
 	"github.com/go-playground/validator/v10"
 	jsoniter "github.com/json-iterator/go"
 )

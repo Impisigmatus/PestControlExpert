@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/utils"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/utils"
 )
 
 type authorization struct {

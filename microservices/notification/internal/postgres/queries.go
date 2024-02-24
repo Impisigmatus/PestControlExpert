@@ -3,8 +3,8 @@ package postgres
 import (
 	"fmt"
 
-	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/models"
 	"github.com/jmoiron/sqlx"
 )
 

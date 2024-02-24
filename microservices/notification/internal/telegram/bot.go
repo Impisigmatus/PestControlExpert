@@ -3,9 +3,9 @@ package telegram
 import (
 	"fmt"
 
-	"github.com/Impisigmatus/PestControlExpert/notification/autogen"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/models"
-	"github.com/Impisigmatus/PestControlExpert/notification/internal/postgres"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/models"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/postgres"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/sirupsen/logrus"
 )

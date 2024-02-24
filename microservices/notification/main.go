@@ -12,10 +12,11 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/Impisigmatus/PestControlExpert/price/autogen"
-	"github.com/Impisigmatus/PestControlExpert/price/internal/database"
-	"github.com/Impisigmatus/PestControlExpert/price/internal/middlewares"
-	"github.com/Impisigmatus/PestControlExpert/price/internal/service"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/autogen"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/middlewares"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/postgres"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/service"
+	"github.com/Impisigmatus/PestControlExpert/microservices/notification/internal/telegram"
 	"github.com/sirupsen/logrus"
 )
 
@@ -36,6 +37,8 @@ func main() {
 		base       = 10
 		size       = 64
 		address    = "ADDRESS"
+		token      = "TELEGRAM_API_TOKEN"
+		password   = "SUBSCRIBE_PASSWORD"
 		auth       = "APIS_AUTH_BASIC"
 		pgHost     = "POSTGRES_HOSTNAME"
 		pgPort     = "POSTGRES_PORT"
@@ -50,13 +53,17 @@ func main() {
 	}
 
 	transport := service.NewTransport(
-		database.PostgresConfig{
-			Hostname: os.Getenv(pgHost),
-			Port:     port,
-			Database: os.Getenv(pgDB),
-			User:     os.Getenv(pgUser),
-			Password: os.Getenv(pgPassword),
-		},
+		telegram.NewBot(
+			postgres.Config{
+				Hostname: os.Getenv(pgHost),
+				Port:     port,
+				Database: os.Getenv(pgDB),
+				User:     os.Getenv(pgUser),
+				Password: os.Getenv(pgPassword),
+			},
+			os.Getenv(token),
+			os.Getenv(password),
+		),
 	)
 	router := http.NewServeMux()
 	router.Handle("/api/",

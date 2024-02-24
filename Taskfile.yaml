@@ -8,9 +8,9 @@ includes:
   www:
     taskfile: www/Taskfile.www.yaml
   notification:
-    taskfile: notification/Taskfile.notification.yaml
-  price:
-    taskfile: price/Taskfile.price.yaml
+    taskfile: microservices/notification/Taskfile.notification.yaml
+  prices:
+    taskfile: microservices/prices/Taskfile.prices.yaml
 
 tasks:
   default:
@@ -27,4 +27,4 @@ tasks:
     desc: Обновление сервисов
     deps:
       - notification:update
-      - price:update
+      - prices:update

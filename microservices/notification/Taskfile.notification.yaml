@@ -4,27 +4,27 @@ tasks:
   run:
     desc: Запуск сервиса оповещений
     vars:
-      IMAGE: pest_control_expert/price
+      IMAGE: pest_control_expert/notification
     cmds:
-      - cd price/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run --env-file .env -d -p 8000:8000 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
+      - cd microservices/notification/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run --env-file .env -d -p 8000:8000 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
     deps:
       - update
 
   format:
     desc: Форматирование gofmt
     cmds:
-      - cd price/ && test -z $(gofmt -l ./internal)
+      - cd microservices/notification/ && test -z $(gofmt -l ./internal)
 
   test:
     desc: Запуск тестов
     cmds:
-      - cd price/ && go test -count=1 ./...
+      - cd microservices/notification/ && go test -count=1 ./...
 
   update:
     desc: Автогенерация OpenAPI 3 и обновление зависимостей
     cmds:
-      - cd price/ && go mod tidy
-      - cd price/ && go mod vendor
+      - cd microservices/notification/ && go mod tidy
+      - cd microservices/notification/ && go mod vendor
     deps:
       - mock-gen
       - oapi3-code-gen
@@ -33,14 +33,14 @@ tasks:
   mock-gen:
     desc: Генерация mock файлов
     cmds:
-      - cd notification && go generate ./...
+      - cd microservices/notification && go generate ./...
     deps:
       - dependencies
 
   oapi3-code-gen:
     desc: Автогенерация интерфейсов OpenAPI 3
     vars:
-      ROOT_DIR: price
+      ROOT_DIR: microservices/notification
       AUTOGEN_DIR: autogen
     cmds:
       - cd {{.ROOT_DIR}} && mkdir -p {{.AUTOGEN_DIR}}
@@ -53,7 +53,7 @@ tasks:
   oapi3-doc-gen:
     desc: Автогенерация документации OpenAPI 3
     vars:
-      ROOT_DIR:  price
+      ROOT_DIR:  microservices/notification
       AUTOGEN_DIR: autogen/docs
     cmds:
       - cd {{.ROOT_DIR}} && redoc-cli build {{.AUTOGEN_DIR}}/oapi3.yaml -o {{.AUTOGEN_DIR}}/user-doc.html
@@ -63,7 +63,7 @@ tasks:
 
   oapi3-yaml-gen:
     vars:
-      ROOT_DIR: price
+      ROOT_DIR: microservices/notification
       AUTOGEN_DIR: autogen/docs
     cmds:
       - cd {{.ROOT_DIR}} && mkdir -p {{.AUTOGEN_DIR}}
@@ -72,5 +72,6 @@ tasks:
 
   dependencies:
     cmds:
+      - '[ -x "$(command -v mockgen)" ] || go install github.com/golang/mock/mockgen@latest'
       - '[ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest'
       - '[ -x "$(command -v redoc-cli)" ] || npm i -g --prefix=/opt/npm redoc-cli'
