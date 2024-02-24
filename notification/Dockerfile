@@ -3,12 +3,12 @@ FROM golang:1.22-alpine AS builder
 ADD . /src/notification
 WORKDIR /src/notification
 RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest && \
-    mkdir -p autogen/docs \
-    sed -e 's/^/    /' README.md > autogen/docs/README.md && \
-    sed -e '/    %README.md%/{' -e "r autogen/docs/README.md" -e 'd' -e '}' oapi3.yaml > autogen/oapi3.yaml && \
-    oapi-codegen -o autogen/server.go -old-config-style -package autogen -generate chi-server autogen/docs/oapi3.yaml && \
-    oapi-codegen -o autogen/types.go -old-config-style -package autogen -generate types autogen/docs/oapi3.yaml && \
-    oapi-codegen -o autogen/client.go -old-config-style -package autogen -generate client autogen/docs/oapi3.yaml
+    mkdir -p autogen && \
+    sed -e 's/^/    /' README.md > autogen/README.md && \
+    sed -e '/    %README.md%/{' -e "r autogen/README.md" -e 'd' -e '}' oapi3.yaml > autogen/oapi3.yaml && \
+    oapi-codegen -o autogen/server.go -old-config-style -package autogen -generate chi-server autogen/oapi3.yaml && \
+    oapi-codegen -o autogen/types.go  -old-config-style -package autogen -generate types      autogen/oapi3.yaml && \
+    oapi-codegen -o autogen/client.go -old-config-style -package autogen -generate client     autogen/oapi3.yaml
 RUN ls -R
 RUN CGO_ENABLED=1 GOOS=linux go build -x -o /build/notification .
 
