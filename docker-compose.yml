@@ -22,12 +22,12 @@ services:
     links:
       - portainer
       - notification
-      - price
+      - prices
       - pgadmin4
     depends_on:
       - portainer
       - notification
-      - price
+      - prices
       - pgadmin4
 
   portainer:
@@ -79,9 +79,9 @@ services:
     depends_on:
       - database
 
-  price:
-    build: microservices/price/
-    container_name: api_Price
+  prices:
+    build: microservices/prices/
+    container_name: api_Prices
     restart: always
     environment:
       - ADDRESS=:8000
