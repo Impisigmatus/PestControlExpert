@@ -11,6 +11,7 @@ __debug_bin
 ssl_private/
 
 # local env files
+.env
 .env.local
 .env.*.local
 
