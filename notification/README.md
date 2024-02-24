@@ -1,1 +1,2 @@
-# PestControlExpert notification service
+# Notification
+Сервис отправки уведомлений об обратных звонках в Telegram бота.

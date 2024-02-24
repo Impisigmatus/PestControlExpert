@@ -14,11 +14,17 @@ includes:
 
 tasks:
   default:
-    desc: Список задач
+    desc: Список команд
     cmds:
       - task --list
 
-  compose:
+  cicd:
     desc: Локальный CI/CD сервисов
     cmds:
       - docker-compose build && docker-compose up -d --force-recreate
+
+  update:
+    desc: Обновление сервисов
+    deps:
+      - notification:update
+      - price:update

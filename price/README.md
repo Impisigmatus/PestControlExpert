@@ -1,1 +1,2 @@
-# PestControlExpert price service
+# Price
+Сервис для получения актуального прайс-листа на товары и услуги.
