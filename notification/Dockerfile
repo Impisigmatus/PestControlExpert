@@ -1,5 +1,5 @@
 # Builder
-FROM golang:1.22-alpine AS builder
+FROM golang:1.19-alpine AS builder
 ADD . /src/notification
 WORKDIR /src/notification
 RUN [ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest && \
