@@ -1,0 +1,76 @@
+version: 3
+
+tasks:
+  run:
+    desc: Запуск сервиса оповещений
+    vars:
+      IMAGE: pest_control_expert/prices
+    cmds:
+      - cd microservices/prices && docker build -t {{.IMAGE}} -f Dockerfile . && docker run --env-file .env -d -p 8000:8000 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
+    deps:
+      - update
+
+  format:
+    desc: Форматирование gofmt
+    cmds:
+      - cd microservices/prices && test -z $(gofmt -l ./internal)
+
+  test:
+    desc: Запуск тестов
+    cmds:
+      - cd microservices/prices && go test -count=1 ./...
+
+  update:
+    desc: Автогенерация OpenAPI 3 и обновление зависимостей
+    cmds:
+      - cd microservices/prices && go mod tidy
+      - cd microservices/prices && go mod vendor
+    deps:
+      - mock-gen
+      - oapi3-code-gen
+      - oapi3-doc-gen
+
+  mock-gen:
+    desc: Генерация mock файлов
+    cmds:
+      - cd microservices/prices && go generate ./...
+    deps:
+      - dependencies
+
+  oapi3-code-gen:
+    desc: Автогенерация интерфейсов OpenAPI 3
+    vars:
+      ROOT_DIR: microservices/prices
+      AUTOGEN_DIR: autogen
+    cmds:
+      - cd {{.ROOT_DIR}} && mkdir -p {{.AUTOGEN_DIR}}
+      - cd {{.ROOT_DIR}} && oapi-codegen -o {{.AUTOGEN_DIR}}/server.go -old-config-style -package autogen -generate chi-server {{.AUTOGEN_DIR}}/docs/oapi3.yaml
+      - cd {{.ROOT_DIR}} && oapi-codegen -o {{.AUTOGEN_DIR}}/types.go  -old-config-style -package autogen -generate types      {{.AUTOGEN_DIR}}/docs/oapi3.yaml
+      - cd {{.ROOT_DIR}} && oapi-codegen -o {{.AUTOGEN_DIR}}/client.go -old-config-style -package autogen -generate client     {{.AUTOGEN_DIR}}/docs/oapi3.yaml
+    deps:
+      - oapi3-doc-gen
+
+  oapi3-doc-gen:
+    desc: Автогенерация документации OpenAPI 3
+    vars:
+      ROOT_DIR:  microservices/prices
+      AUTOGEN_DIR: autogen/docs
+    cmds:
+      - cd {{.ROOT_DIR}} && redoc-cli build {{.AUTOGEN_DIR}}/oapi3.yaml -o {{.AUTOGEN_DIR}}/user-doc.html
+    deps:
+      - oapi3-yaml-gen
+      - dependencies
+
+  oapi3-yaml-gen:
+    vars:
+      ROOT_DIR: microservices/prices
+      AUTOGEN_DIR: autogen/docs
+    cmds:
+      - cd {{.ROOT_DIR}} && mkdir -p {{.AUTOGEN_DIR}}
+      - cd {{.ROOT_DIR}} && sed -e 's/^/    /' README.md > {{.AUTOGEN_DIR}}/README.md
+      - cd {{.ROOT_DIR}} && sed -e '/    %README.md%/{' -e "r {{.AUTOGEN_DIR}}/README.md" -e 'd' -e '}' oapi3.yaml > {{.AUTOGEN_DIR}}/oapi3.yaml
+
+  dependencies:
+    cmds:
+      - '[ -x "$(command -v oapi-codegen)" ] || go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest'
+      - '[ -x "$(command -v redoc-cli)" ] || npm i -g --prefix=/opt/npm redoc-cli'

@@ -1,12 +1,17 @@
 version: 3
 
 tasks:
+  run-dev:
+    desc: Локальный запуск NodeJS для разработки.
+    cmds:
+      - cd www/ && npm install && npm run lint && npm run build && npm run serve
+
   run:
     desc: Запуск NodeJS
     vars:
       IMAGE: pest_control_expert/nodejs
     cmds:
-      - cd www/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run -d -p 8080:8080 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
+      - cd www/ && docker build -t {{.IMAGE}} -f Dockerfile . && docker run -d -p 8000:8000 --user $(id -u):$(id -g) --rm {{.IMAGE}}:latest
 
   build:
     desc: Сборка NodeJS

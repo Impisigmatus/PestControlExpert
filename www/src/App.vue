@@ -20,7 +20,7 @@
     </a>
   </transition>
   <div v-show="timer" class="callnowbutton">
-    <a class="phone" href="tel:+7999999999"> Связаться с нами </a>
+    <a class="phone" href="tel:+79057247681"> позвонить </a>
   </div>
 </template>
 
@@ -62,7 +62,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #eee;
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
 }
 
 * {
@@ -88,8 +93,8 @@ export default {
   }
 }
 .pageup {
-  width: 26px;
-  height: 26px;
+  width: 64px;
+  height: 64px;
   position: fixed;
   bottom: 100px;
   right: 5%;
@@ -122,12 +127,12 @@ export default {
   z-index: 100;
   padding: 10px;
   border-radius: 20px 20px 0 0;
-  left: -45px;
+  left: -50px;
   bottom: 280px;
   height: 30px;
   text-align: center;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 20px;
   overflow: hidden;
   background: #00bb00;
   display: flex;

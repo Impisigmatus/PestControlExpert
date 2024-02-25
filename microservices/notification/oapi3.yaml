@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: PPestControlExpert Notification API
+  description: |
+    %README.md%
+
+tags:
+  - name: add
+    x-displayName: Создание
+
+paths:
+  "/api/notify":
+    post:
+      tags:
+        - add
+      summary: Отправка оповещения
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+      responses:
+        "204":
+          description: Успешная отправка оповещения
+        "400":
+          description: Ошибка валидации входных данных
+        "401":
+          description: Ошибка авторизации
+        "500":
+          description: Внутренняя ошибка сервиса
+
+components:
+  schemas:
+    Notification:
+      type: object
+      description: Оповещение
+      required:
+        - name
+        - phone
+      properties:
+        name:
+          type: string
+          description: ФИО запрашивающего обратный звонок
+          x-oapi-codegen-extra-tags:
+            db: name
+            validate: required
+        phone:
+          type: string
+          description: ФИО запрашивающего обратный звонок
+          x-oapi-codegen-extra-tags:
+            db: phone
+            validate: required,e164
+        description:
+          type: string
+          description: Описание запроса
+          x-oapi-codegen-extra-tags:
+            db: description

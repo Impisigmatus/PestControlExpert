@@ -1,8 +1,17 @@
 .DS_Store
 node_modules
 www/dist
+**/vendor**
+**/portainer-data**
+**/postgres-data**
+*\.log
+**/autogen**
+mem.db.json
+__debug_bin
+ssl_private/
 
 # local env files
+.env
 .env.local
 .env.*.local
 

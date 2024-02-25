@@ -1,11 +1,30 @@
 version: 3
 
+dotenv: ['.env']
+
 includes:
+  migration:
+    taskfile: migration/Taskfile.migration.yaml
   www:
     taskfile: www/Taskfile.www.yaml
+  notification:
+    taskfile: microservices/notification/Taskfile.notification.yaml
+  prices:
+    taskfile: microservices/prices/Taskfile.prices.yaml
 
 tasks:
   default:
-    desc: Список задач
+    desc: Список команд
     cmds:
       - task --list
+
+  cicd:
+    desc: Локальный CI/CD сервисов
+    cmds:
+      - docker-compose build && docker-compose up -d --force-recreate
+
+  update:
+    desc: Обновление сервисов
+    deps:
+      - notification:update
+      - prices:update
