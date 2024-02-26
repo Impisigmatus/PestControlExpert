@@ -8,17 +8,23 @@ includes:
   www:
     taskfile: www/Taskfile.www.yaml
   notification:
-    taskfile: notification/Taskfile.notification.yaml
-  price:
-    taskfile: price/Taskfile.price.yaml
+    taskfile: microservices/notification/Taskfile.notification.yaml
+  prices:
+    taskfile: microservices/prices/Taskfile.prices.yaml
 
 tasks:
   default:
-    desc: Список задач
+    desc: Список команд
     cmds:
       - task --list
 
-  compose:
+  cicd:
     desc: Локальный CI/CD сервисов
     cmds:
       - docker-compose build && docker-compose up -d --force-recreate
+
+  update:
+    desc: Обновление сервисов
+    deps:
+      - notification:update
+      - prices:update
