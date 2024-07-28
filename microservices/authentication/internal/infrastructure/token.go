@@ -9,7 +9,7 @@ import (
 
 func (infra *Infrastructure) GetClaims(username string) models.Claims {
 	issuedAt := time.Now()
-	expiresAt := issuedAt.Add(infra.expiresIn)
+	expiresAt := issuedAt.Add(time.Duration(infra.ExpiresIn) * time.Second)
 
 	return models.Claims{
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -25,7 +25,7 @@ func (infra *Infrastructure) GetClaims(username string) models.Claims {
 		Username:  username,
 		IssuedAt:  issuedAt,
 		ExpiresAt: expiresAt,
-		ExpiresIn: int(infra.expiresIn.Seconds()),
+		ExpiresIn: infra.ExpiresIn,
 		Type:      tokenType,
 		Resources: infra.resources,
 	}

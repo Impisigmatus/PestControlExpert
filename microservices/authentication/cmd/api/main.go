@@ -5,6 +5,8 @@ import (
 
 	_ "github.com/Impisigmatus/PestControlExpert/microservices/authentication/autogen/docs"
 	"github.com/Impisigmatus/PestControlExpert/microservices/authentication/autogen/server"
+	"github.com/Impisigmatus/PestControlExpert/microservices/authentication/internal/infrastructure"
+	"github.com/Impisigmatus/PestControlExpert/microservices/authentication/internal/middlewares"
 	"github.com/Impisigmatus/PestControlExpert/microservices/authentication/internal/transport"
 	"github.com/Impisigmatus/service_core/log"
 	"github.com/go-chi/chi/v5"
@@ -19,8 +21,18 @@ import (
 func main() {
 	log.Init(log.LevelDebug)
 
+	infra := infrastructure.New(18000)
+
 	router := chi.NewRouter()
-	router.Handle("/*", server.Handler(transport.New(18000)))
+	router.Handle("/*",
+		middlewares.Use(
+			middlewares.Use(
+				server.Handler(transport.New(infra)),
+				middlewares.Logger(),
+			),
+			middlewares.Authorization(infra),
+		),
+	)
 	router.Get("/swagger/*", httpSwagger.Handler())
 
 	server := &http.Server{

@@ -15,12 +15,12 @@ type handler struct {
 	expiresIn int
 }
 
-func New(expiresIn int) server.ServerInterface {
+func New(infra *infrastructure.Infrastructure) server.ServerInterface {
 	return &handler{
-		infra:    infrastructure.New(expiresIn),
+		infra:    infra,
 		validate: validator.New(),
 
 		issuer:    issuer,
-		expiresIn: expiresIn,
+		expiresIn: infra.ExpiresIn,
 	}
 }
