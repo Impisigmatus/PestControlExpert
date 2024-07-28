@@ -7,7 +7,7 @@ www/dist
 *\.log
 **/autogen**
 mem.db.json
-__debug_bin
+__debug_bin*
 ssl_private/
 
 # local env files

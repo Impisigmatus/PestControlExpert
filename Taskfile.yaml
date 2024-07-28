@@ -20,8 +20,10 @@ tasks:
 
   cicd:
     desc: Локальный CI/CD сервисов
+    vars:
+      COMPOSE_PATH: docker-compose.dev.yml
     cmds:
-      - docker-compose build && docker-compose up -d --force-recreate
+      - docker compose -f {{.COMPOSE_PATH}} build && docker compose -f {{.COMPOSE_PATH}} up -d --force-recreate
 
   update:
     desc: Обновление сервисов
