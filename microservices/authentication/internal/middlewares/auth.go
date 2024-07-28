@@ -2,7 +2,6 @@ package middlewares
 
 import (
 	"encoding/base64"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -29,13 +28,13 @@ func Authorization(infra *infrastructure.Infrastructure) Middleware {
 func (auth *authorization) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	data := r.Header.Get(headerAuthorization)
 	if len(data) < skipLength {
-		utils.WriteString(w, http.StatusUnauthorized, nil, "invalid authorization header")
+		utils.WriteString(w, http.StatusUnauthorized, AuthorizationHeaderError, "invalid header")
 		return
 	}
 
 	switch {
-	case strings.HasPrefix(data, "Basic"):
-		if err := auth.basic("Basic:", data); err != nil {
+	case strings.HasPrefix(data, prefixBasic):
+		if err := auth.basic(data); err != nil {
 			utils.WriteString(w, http.StatusUnauthorized, err, "authorization failed")
 			return
 		}
@@ -45,7 +44,7 @@ func (auth *authorization) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	default:
-		utils.WriteString(w, http.StatusUnauthorized, fmt.Errorf("invalid authorization method"), "authorization failed")
+		utils.WriteString(w, http.StatusUnauthorized, AuthorizationMethodError, "authorization failed")
 		return
 	}
 
@@ -62,15 +61,15 @@ func (auth *authorization) token(data string) error {
 	return nil
 }
 
-func (auth *authorization) basic(prefix string, data string) error {
-	authorization := data[len(prefix):]
+func (auth *authorization) basic(data string) error {
+	authorization := data[len(prefixBasic)+1:]
 	decoded, err := base64.StdEncoding.DecodeString(authorization)
 	if err != nil {
-		return fmt.Errorf("Invalid decode basic authorization: %s", err)
+		return err
 	}
 
-	if string(decoded) != "dev:test" {
-		return fmt.Errorf("Invalid basic authorization")
+	if string(decoded) != secret {
+		return BasicAuthorizationError
 	}
 
 	return nil
